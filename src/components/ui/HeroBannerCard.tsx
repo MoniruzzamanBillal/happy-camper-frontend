@@ -6,9 +6,9 @@ type HeroBannerCardProps = {
   banner: TBanner;
 };
 
-const HeroBannerCard: React.FC<HeroBannerCardProps> = ({ banner }) => {
+const HeroBannerCard = ({ banner }: HeroBannerCardProps) => {
   return (
-    <section className="  flex container flex-col items-center justify-between  lg:flex-row gap-y-10 lg:gap-y-0 ">
+    <section className="   flex container flex-col items-center justify-between  lg:flex-row gap-y-10 lg:gap-y-0 ">
       {/* content - start  */}
       <div className=" w-[99%] xsm:w-[90%] sm:w-[80%]  md:w-[70%] xmd:w-[60%] lg:w-[50%] flex flex-col justify-center sm:text-center  lg:text-left   ">
         <p className="mb-4 font-semibold text-indigo-500 md:mb-6 md:text-lg xl:text-xl">

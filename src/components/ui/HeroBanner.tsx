@@ -44,7 +44,7 @@ const bannerInfo: TBanner[] = [
 
 const HeroBanner = () => {
   return (
-    <div className="heroBannerContainer ">
+    <div className="heroBannerContainer py-8 ">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
