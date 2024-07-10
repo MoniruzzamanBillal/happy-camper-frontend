@@ -71,13 +71,13 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
-      screens: {
-        xsm: "500px",
-        xmd: "860px",
-      },
       fontFamily: {
         headingFont2: ["Sarina", "cursive"],
         headingFont: ["Dancing Script", "cursive"],
+      },
+      screens: {
+        xsm: "500px",
+        xmd: "860px",
       },
     },
   },
