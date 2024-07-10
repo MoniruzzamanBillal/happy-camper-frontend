@@ -47,15 +47,28 @@ const bestSellerInfo: TBestSeller[] = [
 const BestSeller = () => {
   return (
     <div className="BestSellerContainer bg-gray-100 py-8">
-      <div className="BestSellerWrapper   w-[96%] sm:w-[92%] md:w-[90%]  m-auto   ">
-        <h1 className=" mb-6  md:mb-8 xmd:mb-12 lg:mb-14 text-center font-semibold text-indigo-500 text-lg xsm:text-xl sm:text-3xl md:text-3xl xl:text-4xl">
+      <div className="BestSellerWrapper w-[96%] sm:w-[92%] md:w-[90%] m-auto ">
+        <h1 className=" mb-6  md:mb-8 xmd:mb-12 lg:mb-14 text-center font-semibold text-indigo-500 text-lg xsm:text-xl sm:text-3xl md:text-3xl xl:text-4xl text-shadow-blue">
           Best seller
         </h1>
 
         {/* best seller items starts  */}
         <div className="bestSellerItem   ">
           <Swiper
-            slidesPerView={4}
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+              },
+              600: {
+                slidesPerView: 2,
+              },
+              768: {
+                slidesPerView: 3,
+              },
+              1024: {
+                slidesPerView: 4,
+              },
+            }}
             centeredSlides={true}
             spaceBetween={30}
             grabCursor={true}
