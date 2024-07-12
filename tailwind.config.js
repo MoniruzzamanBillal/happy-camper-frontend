@@ -18,6 +18,9 @@ module.exports = {
     },
     extend: {
       colors: {
+        customOrange: "#EF4A23",
+        customViolet: "#6366F1",
+        customHoverViolet: "#4F46E5",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
