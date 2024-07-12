@@ -5,7 +5,7 @@ const Navbar = () => {
   const Links = [
     { name: "Home", link: "/" },
     { name: "About us", link: "/" },
-    { name: "products", link: "/" },
+    { name: "products", link: "/products" },
   ];
 
   const [open, setOpen] = useState(false);

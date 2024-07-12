@@ -7,7 +7,7 @@ type TBestSellerProps = {
 
 const BestSellerCard = ({ item }: TBestSellerProps) => {
   return (
-    <div className="bestSellerCard bg-white  py-2 rounded-md  flex flex-col items-center gap-y-4 border hover:border-indigo-500 shadow-sm hover:shadow-md">
+    <div className="bestSellerCard bg-white  py-2   flex flex-col items-center gap-y-4 border rounded-2xl hover:border-indigo-500 shadow-sm hover:shadow-md">
       {/* item image  */}
       <div className="cardImg size-[12rem]  ">
         <img className=" w-full h-full " src={item?.prodImg} alt="" />
