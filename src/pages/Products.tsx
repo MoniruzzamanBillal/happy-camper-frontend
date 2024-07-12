@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 
 const Products = () => {
@@ -52,7 +53,6 @@ const Products = () => {
           {/* filter section   */}
           <div className="contentLeft w-0 xl:w-[30%] hidden xl:block  ">
             <ProductsFilter />
-
             {/*  */}
           </div>
           {/* left section ends  */}
@@ -64,26 +64,33 @@ const Products = () => {
             <div className="contentTop bg-gray-50 shadow-md rounded border border-gray-300 py-2 px-4 flex justify-between items-center ">
               {/* Conditional rendering of ProductsFilter */}
               {!isXl ? (
-                <div className="filterMenuIcon flex justify-between items-center gap-x-1 cursor-pointer ">
-                  {/* icon starts  */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5"
-                    />
-                  </svg>
+                <Sheet>
+                  <SheetTrigger>
+                    <div className="filterMenuIcon flex justify-between items-center gap-x-1 cursor-pointer ">
+                      {/* icon starts  */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5"
+                        />
+                      </svg>
 
-                  {/* icon ends */}
-                  <p className=" font-medium  ">Filter</p>
-                </div>
+                      {/* icon ends */}
+                      <p className=" font-medium  ">Filter</p>
+                    </div>
+                  </SheetTrigger>
+                  <SheetContent>
+                    <ProductsFilter />
+                  </SheetContent>
+                </Sheet>
               ) : (
                 <h1 className=" text-lg font-medium ">Product name </h1>
               )}

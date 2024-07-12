@@ -1,4 +1,5 @@
 import { Slider } from "@/components/ui/slider";
+import { Button } from "./button";
 
 const ProductsFilter = () => {
   return (
@@ -76,6 +77,16 @@ const ProductsFilter = () => {
         </ul>
       </div>
       {/* * car type input ends   */}
+
+      {/* reset btn  */}
+      <div className="resetBtn w-[98%] m-auto   ">
+        <Button className="bg-red-600 hover:bg-red-700 hover:shadow-md hover:scale-[1.02] active:scale-100 duration-200 w-full  ">
+          Reset
+        </Button>
+      </div>
+      {/* reset btn  */}
+
+      {/*  */}
     </div>
   );
 };
