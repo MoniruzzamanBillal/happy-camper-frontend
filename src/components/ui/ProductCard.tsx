@@ -14,7 +14,7 @@ const ProductCard = () => {
 
       {/* prod name  */}
       <div className="productName  px-3 ">
-        <p className=" font-semibold group-hover:text-customOrange ">
+        <p className=" font-semibold group-hover:text-customOrange text-center ">
           Havit KB271 USB Exquisite Keyboard with Bangla
         </p>
       </div>
