@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Magnifier from "react-magnifier";
 
 const ProductDetail = () => {
   const [currentActiveImage, setCurrentActiveImage] = useState(
@@ -14,16 +15,10 @@ const ProductDetail = () => {
               {/* images - start  */}
               <div className="space-y-4">
                 <div className="relative overflow-hidden rounded-lg bg-gray-100">
-                  <img
+                  <Magnifier
                     src={currentActiveImage}
-                    loading="lazy"
-                    alt="Photo by Himanshu Dewangan"
                     className="h-full w-full object-cover object-center"
                   />
-
-                  <span className="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1.5 text-sm uppercase tracking-wider text-white">
-                    sale
-                  </span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
