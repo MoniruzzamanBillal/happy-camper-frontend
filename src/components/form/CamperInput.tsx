@@ -14,7 +14,14 @@ const CamperInput = ({ type, label, name }: TInput) => {
 
       <Controller
         name={name}
-        render={({ field }) => <Input type={type} id={name} {...field} />}
+        render={({ field }) => (
+          <Input
+            type={type}
+            id={name}
+            {...field}
+            className="border border-gray-400"
+          />
+        )}
       />
     </div>
   );
