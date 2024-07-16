@@ -7,8 +7,10 @@ import ProductDetail from "@/pages/ProductDetail";
 import ProductCart from "@/pages/ProductCart";
 import Checkout from "@/pages/Checkout";
 import AboutUs from "@/pages/AboutUs";
-import AddProduct from "@/pages/AddProduct";
+// import AddProduct from "@/pages/AddProduct";
 import Test from "@/pages/Test";
+import ProductTable from "@/pages/ProductTable";
+import AddProduct from "@/pages/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />,
+      },
+      {
+        path: "/all-product",
+        element: <ProductTable />,
       },
       {
         path: "/add-product",

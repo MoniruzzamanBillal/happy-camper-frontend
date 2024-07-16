@@ -1,4 +1,4 @@
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { Input } from "../ui/input";
 
 type TInput = {
@@ -9,18 +9,32 @@ type TInput = {
 
 const CamperInput = ({ type, label, name }: TInput) => {
   return (
-    <div className="CamperInputContainer mb-5 flex flex-col gap-y-1 ">
-      {label ? label : null}
+    <div className="CamperInputContainer mb-5 flex flex-col gap-y-1">
+      {label ? <label htmlFor={name}>{label}</label> : null}
 
       <Controller
         name={name}
-        render={({ field }) => (
-          <Input
-            type={type}
-            id={name}
-            {...field}
-            className="border border-gray-400"
-          />
+        render={({ field, fieldState: { error } }) => (
+          <>
+            <Input
+              type={type}
+              id={name}
+              className="border border-gray-400"
+              onChange={(e) => {
+                if (type === "file") {
+                  field.onChange(e.target.files?.[0] || null);
+                } else {
+                  field.onChange(e.target.value);
+                }
+              }}
+            />
+
+            {error && (
+              <p className="text-xs font-medium text-red-600">
+                {error.message}
+              </p>
+            )}
+          </>
         )}
       />
     </div>

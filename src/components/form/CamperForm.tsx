@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { ReactNode } from "react";
 import {
   useForm,
@@ -6,13 +8,33 @@ import {
   FieldValues,
 } from "react-hook-form";
 
+type TFormConfig = {
+  defaultValues?: Record<string, any>;
+  resolver?: any;
+};
+
 type TFormProps = {
   onSubmit: SubmitHandler<FieldValues>;
   children: ReactNode;
-};
+} & TFormConfig;
 
-const CamperForm = ({ onSubmit, children }: TFormProps) => {
-  const methods = useForm();
+const CamperForm = ({
+  onSubmit,
+  children,
+  defaultValues,
+  resolver,
+}: TFormProps) => {
+  const formConfig: TFormConfig = {};
+
+  if (defaultValues) {
+    formConfig["defaultValues"] = defaultValues;
+  }
+
+  if (resolver) {
+    formConfig["resolver"] = resolver;
+  }
+
+  const methods = useForm(formConfig);
 
   return (
     <div className="CamperFormContainer">
