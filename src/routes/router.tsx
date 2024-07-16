@@ -11,6 +11,7 @@ import AboutUs from "@/pages/AboutUs";
 import Test from "@/pages/Test";
 import ProductTable from "@/pages/ProductTable";
 import AddProduct from "@/pages/AddProduct";
+import UpdateProduct from "@/pages/UpdateProduct";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "/add-product",
         element: <AddProduct />,
+      },
+      {
+        path: "/update-product/:id",
+        element: <UpdateProduct />,
       },
       {
         path: "/test",

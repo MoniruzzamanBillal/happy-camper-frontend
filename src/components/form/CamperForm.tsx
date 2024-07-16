@@ -37,11 +37,9 @@ const CamperForm = ({
   const methods = useForm(formConfig);
 
   return (
-    <div className="CamperFormContainer">
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
-      </FormProvider>
-    </div>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+    </FormProvider>
   );
 };
 

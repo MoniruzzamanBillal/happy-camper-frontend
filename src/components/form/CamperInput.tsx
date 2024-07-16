@@ -8,18 +8,22 @@ type TInput = {
 };
 
 const CamperInput = ({ type, label, name }: TInput) => {
+  const { control } = useFormContext();
+
   return (
     <div className="CamperInputContainer mb-5 flex flex-col gap-y-1">
       {label ? <label htmlFor={name}>{label}</label> : null}
 
       <Controller
         name={name}
+        control={control}
         render={({ field, fieldState: { error } }) => (
           <>
             <Input
               type={type}
               id={name}
               className="border border-gray-400"
+              value={type === "file" ? undefined : field?.value}
               onChange={(e) => {
                 if (type === "file") {
                   field.onChange(e.target.files?.[0] || null);

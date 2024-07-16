@@ -1,9 +1,10 @@
+import { useNavigate, useParams } from "react-router-dom";
 import CamperForm from "@/components/form/CamperForm";
 import CamperInput from "@/components/form/CamperInput";
 import CamperSelect from "@/components/form/CamperSelect";
 import CamperTextArea from "@/components/form/CamperTextArea";
 import { Button } from "@/components/ui/button";
-import { addProductSchema } from "@/schemas/addProduct.schema";
+import { updateProductSchema } from "@/schemas/addProduct.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues } from "react-hook-form";
 
@@ -22,24 +23,39 @@ const options = [
   },
 ];
 
-const AddProduct = () => {
-  //    !  for adding new product
-  const handleAddProduct = (data: FieldValues) => {
+const UpdateProduct = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  console.log(id);
+
+  const defaultValues = {
+    name: "Test name ",
+    category: "test 1",
+    price: "1234",
+    description: "test description 1234567",
+  };
+
+  // ! for updating product
+  const handleUpdateProduct = (data: FieldValues) => {
     console.log(data);
   };
 
   return (
-    <div className="AddProductContainer py-8 bg-gray-100 min-h-screen ">
-      <div className="AddProductWrapper w-[96%] sm:w-[92%] md:w-[90%] m-auto ">
+    <div className="UpdateProductContainer  py-8 bg-gray-100 min-h-screen  ">
+      <div className="UpdateProductWrapper w-[96%] sm:w-[92%] md:w-[90%] m-auto  ">
         <h1 className=" mb-8 px-3 xsm:px-4 sm:px-5 md:px-6 font-bold text-2xl  md:text-3xl text-center  ">
-          Add new product
+          Update product
         </h1>
 
-        <div className="addProductForm  p-1 w-[95%] xsm:w-[85%] sm:w-[78%] md:w-[70%] xmd:w-[65%] lg:w-[55%] m-auto ">
+        {/* update product form container starts  */}
+
+        <div className="updateProductForm p-1 w-[95%] xsm:w-[85%] sm:w-[78%] md:w-[70%] xmd:w-[65%] lg:w-[55%] m-auto ">
           {/* form starts  */}
           <CamperForm
-            onSubmit={handleAddProduct}
-            resolver={zodResolver(addProductSchema)}
+            defaultValues={defaultValues}
+            onSubmit={handleUpdateProduct}
+            resolver={zodResolver(updateProductSchema)}
           >
             <CamperInput type="text" label="Name :" name="name" />
             <CamperSelect
@@ -58,10 +74,10 @@ const AddProduct = () => {
           {/* form ends  */}
         </div>
 
-        {/*  */}
+        {/* update product form container ends  */}
       </div>
     </div>
   );
 };
 
-export default AddProduct;
+export default UpdateProduct;

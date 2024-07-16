@@ -83,9 +83,11 @@ const ProductTable = () => {
               <TableCell>Product price</TableCell>
               {/* update button   */}
               <TableCell>
-                <Button className=" px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base bg-green-600 hover:bg-green-700 active:scale-95 duration-500 ">
-                  Update
-                </Button>
+                <Link to={"/update-product/123456"}>
+                  <Button className=" px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base bg-green-600 hover:bg-green-700 active:scale-95 duration-500 ">
+                    Update
+                  </Button>
+                </Link>
               </TableCell>
               {/* update delete   */}
               <TableCell>
