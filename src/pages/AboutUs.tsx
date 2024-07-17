@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaFacebook, FaLinkedin, FaGithub } from "react-icons/fa";
 import TeamMember from "@/components/ui/TeamMember";
+import MapContainer from "@/components/ui/MapContainer";
 
 const AboutUs = () => {
   return (
@@ -82,6 +83,12 @@ const AboutUs = () => {
 
             {/*  */}
           </div>
+
+          {/* map section starts  */}
+          <div className="mapSection  w-[96%] sm:w-[92%] md:w-[90%] m-auto">
+            <MapContainer />
+          </div>
+          {/* map section ends */}
 
           {/*  */}
         </div>
