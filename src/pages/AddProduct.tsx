@@ -1,11 +1,19 @@
+import axios from "axios";
+
 import CamperForm from "@/components/form/CamperForm";
 import CamperInput from "@/components/form/CamperInput";
 import CamperSelect from "@/components/form/CamperSelect";
 import CamperTextArea from "@/components/form/CamperTextArea";
+
 import { Button } from "@/components/ui/button";
 import { addProductSchema } from "@/schemas/addProduct.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues } from "react-hook-form";
+import { useState } from "react";
+import { useAddProductMutation } from "@/redux/features/product/product.api";
+import { toast } from "sonner";
+
+const imageHostingApi = `https://api.imgbb.com/1/upload?key=00fc9e4302335a502d2035bb196a9314`;
 
 const options = [
   {
@@ -23,9 +31,46 @@ const options = [
 ];
 
 const AddProduct = () => {
+  const [loading, setLoading] = useState(false);
+  const [addProduct, { isLoading }] = useAddProductMutation();
+
   //    !  for adding new product
-  const handleAddProduct = (data: FieldValues) => {
-    console.log(data);
+  const handleAddProduct = async (data: FieldValues) => {
+    const { image, name, category, price, description, quantity } = data;
+    const toastId = toast.loading("Creating pproduct ...");
+    try {
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append("image", image);
+
+      const response = await axios.post(imageHostingApi, formData);
+      const imgUrl = response?.data?.data?.display_url;
+
+      const productData = {
+        pname: name,
+        pcategory: category,
+        pquantity: quantity,
+        pimage: imgUrl,
+        pprice: price,
+        pdescriptioin: description,
+      };
+
+      console.log(productData);
+      const res = await addProduct(productData);
+
+      console.log(res?.data);
+      if (res?.data?.success) {
+        toast.success(res?.data?.message, { id: toastId });
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!! ", { id: toastId });
+    }
+
+    //
   };
 
   return (
@@ -47,9 +92,11 @@ const AddProduct = () => {
               label="Category :"
               options={options}
             />
-            <CamperInput type="file" label="Image :" name="image" />
+            <CamperInput type="number" label="Quantity :" name="quantity" />
             <CamperInput type="number" label="Price :" name="price" />
+            <CamperInput type="file" label="Image :" name="image" />
             <CamperTextArea label="Product description :" name="description" />
+
             <Button className="px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base bg-green-600 hover:bg-green-700 active:scale-95 duration-500">
               Add product
             </Button>

@@ -13,6 +13,12 @@ export const addProductSchema = z.object({
     .refine((val) => !isNaN(val) && val > 0, {
       message: "Price must be a number greater than 0",
     }),
+  quantity: z
+    .string()
+    .transform((val) => parseFloat(val))
+    .refine((val) => !isNaN(val) && val > 0, {
+      message: "Price must be a number greater than 0",
+    }),
   description: z
     .string()
     .min(1, { message: "Product description is required" }),
@@ -29,6 +35,13 @@ export const updateProductSchema = z.object({
     })
     .optional(),
   price: z
+    .string()
+    .transform((val) => parseFloat(val))
+    .refine((val) => !isNaN(val) && val > 0, {
+      message: "Price must be a number greater than 0",
+    })
+    .optional(),
+  quantity: z
     .string()
     .transform((val) => parseFloat(val))
     .refine((val) => !isNaN(val) && val > 0, {
