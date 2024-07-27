@@ -10,9 +10,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useGetAllProductQuery } from "@/redux/features/product/product.api";
+import { TProduct } from "@/types/product";
+
 import { useEffect, useState } from "react";
 
 const Products = () => {
+  const { data: allProduct, isLoading } = useGetAllProductQuery(undefined);
   const [isXl, setIsXl] = useState(false);
 
   useEffect(() => {
@@ -25,6 +29,10 @@ const Products = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  if (isLoading) {
+    return <p>loading ...</p>;
+  }
 
   return (
     <div className="ProductsContainer bg-gray-100 py-4 ">
@@ -120,11 +128,10 @@ const Products = () => {
             <div className="productsContent  py-3 px-4 ">
               {/* all products  */}
               <div className="allProducts grid grid-cols-1 sm:grid-cols-2 xmd:grid-cols-3 gap-x-5 gap-y-8 ">
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
+                {allProduct?.data &&
+                  allProduct?.data?.map((product: TProduct, ind: number) => (
+                    <ProductCard product={product} key={ind} />
+                  ))}
               </div>
             </div>
             {/* products content ends */}

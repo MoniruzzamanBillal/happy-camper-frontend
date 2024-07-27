@@ -10,6 +10,14 @@ const productApi = baseApi.injectEndpoints({
       }),
     }),
 
+    // ! get single product
+    getSingleProduct: builder.query({
+      query: (id: string) => ({
+        url: `/product/${id}`,
+        method: "GET",
+      }),
+    }),
+
     // ! add product
     addProduct: builder.mutation({
       query: (payload) => ({
@@ -23,4 +31,8 @@ const productApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllProductQuery, useAddProductMutation } = productApi;
+export const {
+  useGetAllProductQuery,
+  useAddProductMutation,
+  useGetSingleProductQuery,
+} = productApi;

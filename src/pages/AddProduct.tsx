@@ -17,16 +17,28 @@ const imageHostingApi = `https://api.imgbb.com/1/upload?key=00fc9e4302335a502d20
 
 const options = [
   {
-    name: "test 1",
-    value: "test 1",
+    name: "Sleeping Bag",
+    value: "Sleeping Bag",
   },
   {
-    name: "test 2",
-    value: "test 2",
+    name: "Tent",
+    value: "Tent",
   },
   {
-    name: "test 3",
-    value: "test 3",
+    name: "Kitchen",
+    value: "Kitchen",
+  },
+  {
+    name: "Lantern",
+    value: "Lantern",
+  },
+  {
+    name: "Char coal",
+    value: "Char coal",
+  },
+  {
+    name: "Multifunctional Tool",
+    value: "Multifunctional Tool",
   },
 ];
 

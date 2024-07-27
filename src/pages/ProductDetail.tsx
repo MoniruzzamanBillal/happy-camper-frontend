@@ -1,10 +1,28 @@
-import { useState } from "react";
-import Magnifier from "react-magnifier";
+import { useGetSingleProductQuery } from "@/redux/features/product/product.api";
+import GlassZoomImage from "@/utills/GlassZoomImage";
+import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
-  const [currentActiveImage, setCurrentActiveImage] = useState(
-    "https://images.unsplash.com/flagged/photo-1571366992942-be878c7b10c0?auto=format&q=75&fit=crop&w=600"
-  );
+  const { id } = useParams();
+
+  if (!id) {
+    throw new Error("Something went wrong!! ");
+  }
+
+  const { data: productData } = useGetSingleProductQuery(id);
+
+  // console.log(productData?.data);
+
+  const {
+    _id,
+    pname,
+    pcategory,
+    pquantity,
+    pprice,
+    pimage,
+    pdescriptioin,
+    __v,
+  } = productData?.data;
 
   return (
     <div className="ProductDetailContainer  ">
@@ -15,40 +33,7 @@ const ProductDetail = () => {
               {/* images - start  */}
               <div className="space-y-4">
                 <div className="relative overflow-hidden rounded-lg bg-gray-100">
-                  <Magnifier
-                    src={currentActiveImage}
-                    className="h-full w-full object-cover object-center"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="overflow-hidden rounded-lg bg-gray-100">
-                    <img
-                      src="https://images.unsplash.com/flagged/photo-1571366992791-2ad2078656cb?auto=format&q=75&fit=crop&w=250"
-                      loading="lazy"
-                      alt="Photo by Himanshu Dewangan"
-                      className="h-full w-full object-cover object-center"
-                      onClick={() =>
-                        setCurrentActiveImage(
-                          "https://images.unsplash.com/flagged/photo-1571366992791-2ad2078656cb?auto=format&q=75&fit=crop&w=250"
-                        )
-                      }
-                    />
-                  </div>
-
-                  <div className="overflow-hidden rounded-lg bg-gray-100">
-                    <img
-                      src="https://images.unsplash.com/flagged/photo-1571366992968-15b65708ee76?auto=format&q=75&fit=crop&w=250"
-                      loading="lazy"
-                      alt="Photo by Himanshu Dewangan"
-                      className="h-full w-full object-cover object-center"
-                      onClick={() =>
-                        setCurrentActiveImage(
-                          "https://images.unsplash.com/flagged/photo-1571366992968-15b65708ee76?auto=format&q=75&fit=crop&w=250"
-                        )
-                      }
-                    />
-                  </div>
+                  <GlassZoomImage imageSrc={pimage} />
                 </div>
               </div>
               {/* images - end  */}
@@ -58,7 +43,7 @@ const ProductDetail = () => {
                 {/* {/* name - start  */}
                 <div className="mb-2 md:mb-3">
                   <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
-                    Pullover with pattern
+                    {pname}
                   </h2>
                 </div>
                 {/* name - end  */}
@@ -67,10 +52,7 @@ const ProductDetail = () => {
                 <div className="mb-4">
                   <div className="flex items-end gap-2">
                     <span className="text-xl font-bold text-gray-800 md:text-2xl">
-                      $15.00
-                    </span>
-                    <span className="mb-0.5 text-red-500 line-through">
-                      $30.00
+                      {pprice}
                     </span>
                   </div>
 
@@ -110,26 +92,6 @@ const ProductDetail = () => {
                   >
                     Add to cart
                   </a>
-
-                  <a
-                    href="#"
-                    className="inline-block rounded-lg bg-gray-200 px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      />
-                    </svg>
-                  </a>
                 </div>
                 {/* buttons - end  */}
 
@@ -139,18 +101,7 @@ const ProductDetail = () => {
                     Description
                   </div>
 
-                  <p className="text-gray-500">
-                    This is a section of some simple filler text, also known as
-                    placeholder text. It shares some characteristics of a real
-                    written text but is random or otherwise generated. It may be
-                    used to display a sample of fonts or generate text for
-                    testing.
-                    <br />
-                    <br />
-                    This is a section of some simple filler text, also known as
-                    placeholder text. It shares some characteristics of a real
-                    written text but is random or otherwise generated.
-                  </p>
+                  <p className="text-gray-500">{pdescriptioin}</p>
                 </div>
                 {/* description - end  */}
               </div>
