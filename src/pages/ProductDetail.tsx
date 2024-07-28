@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import { useGetSingleProductQuery } from "@/redux/features/product/product.api";
 import GlassZoomImage from "@/utills/GlassZoomImage";
 import { useParams } from "react-router-dom";
@@ -9,12 +10,12 @@ const ProductDetail = () => {
     throw new Error("Something went wrong!! ");
   }
 
-  const { data: productData } = useGetSingleProductQuery(id);
+  const { data: productData, isLoading: productDataLoading } =
+    useGetSingleProductQuery(id);
 
-  // console.log(productData?.data);
-
-  const { _id, pname, pcategory, pquantity, pprice, pimage, pdescriptioin } =
-    productData.data;
+  if (productDataLoading) {
+    return <p>Loading ... </p>;
+  }
 
   return (
     <div className="ProductDetailContainer  ">
@@ -25,7 +26,7 @@ const ProductDetail = () => {
               {/* images - start  */}
               <div className="space-y-4">
                 <div className="relative overflow-hidden rounded-lg bg-gray-100">
-                  <GlassZoomImage imageSrc={pimage} />
+                  <GlassZoomImage imageSrc={productData?.data?.pimage} />
                 </div>
               </div>
               {/* images - end  */}
@@ -35,7 +36,7 @@ const ProductDetail = () => {
                 {/* {/* name - start  */}
                 <div className="mb-2 md:mb-3">
                   <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
-                    {pname}
+                    {productData?.data?.pname}
                   </h2>
                 </div>
                 {/* name - end  */}
@@ -44,7 +45,7 @@ const ProductDetail = () => {
                 <div className="mb-4">
                   <div className="flex items-end gap-2">
                     <span className="text-xl font-bold text-gray-800 md:text-2xl">
-                      {pprice}
+                      {productData?.data?.pprice}
                     </span>
                   </div>
 
@@ -93,7 +94,9 @@ const ProductDetail = () => {
                     Description
                   </div>
 
-                  <p className="text-gray-500">{pdescriptioin}</p>
+                  <p className="text-gray-500">
+                    {productData?.data?.pdescriptioin}
+                  </p>
                 </div>
                 {/* description - end  */}
               </div>

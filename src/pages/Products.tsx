@@ -17,9 +17,9 @@ import { useEffect, useState } from "react";
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [priceRange, setPriceRange] = useState<number | null>(null);
-  const [category, setCategory] = useState("");
-  const [sortBy, setSortBy] = useState("");
+  const [pprice, setPprice] = useState<number | null>(null);
+  const [pcategory, setpPcategory] = useState("");
+  const [sort, setSortBy] = useState("");
 
   const [params, setParams] = useState<Record<string, unknown> | undefined>(
     undefined
@@ -28,9 +28,9 @@ const Products = () => {
   const { data: allProduct, isLoading } = useGetAllProductQuery(params);
   const [isXl, setIsXl] = useState(false);
 
-  // console.log(params);
+  console.log(sort);
 
-  console.log(allProduct);
+  // console.log(allProduct);
 
   useEffect(() => {
     const handleResize = () => {
@@ -52,23 +52,23 @@ const Products = () => {
         newParam.searchTerm = searchTerm;
       }
 
-      if (priceRange) {
-        newParam.priceRange = priceRange;
+      if (pprice) {
+        newParam.pprice = pprice;
       }
 
-      if (category) {
-        newParam.category = category;
+      if (pcategory) {
+        newParam.pcategory = pcategory;
       }
 
-      if (sortBy) {
-        newParam.sortBy = sortBy;
+      if (sort) {
+        newParam.sort = sort;
       }
 
       setParams(newParam);
     };
 
     updateParam();
-  }, [searchTerm, priceRange, category, sortBy]);
+  }, [searchTerm, pprice, pcategory, sort]);
 
   if (isLoading) {
     return <p>loading ...</p>;
@@ -103,10 +103,10 @@ const Products = () => {
           {/* filter section   */}
           <div className="contentLeft w-0 xl:w-[30%] hidden xl:block  ">
             <ProductsFilter
-              priceRange={priceRange}
-              category={category}
-              setPriceRange={setPriceRange}
-              setCategory={setCategory}
+              priceRange={pprice}
+              category={pcategory}
+              setPriceRange={setPprice}
+              setCategory={setpPcategory}
             />
             {/*  */}
           </div>
@@ -144,10 +144,10 @@ const Products = () => {
                   </SheetTrigger>
                   <SheetContent>
                     <ProductsFilter
-                      priceRange={priceRange}
-                      category={category}
-                      setPriceRange={setPriceRange}
-                      setCategory={setCategory}
+                      priceRange={pprice}
+                      category={pcategory}
+                      setPriceRange={setPprice}
+                      setCategory={setpPcategory}
                     />
                   </SheetContent>
                 </Sheet>
@@ -165,8 +165,8 @@ const Products = () => {
                     <SelectValue placeholder="sort by price" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="low">Low to High</SelectItem>
-                    <SelectItem value="high">High to Low </SelectItem>
+                    <SelectItem value="pprice">Low to High</SelectItem>
+                    <SelectItem value="-pprice">High to Low </SelectItem>
                   </SelectContent>
                 </Select>
               </div>

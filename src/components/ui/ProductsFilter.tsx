@@ -11,6 +11,10 @@ interface TProductsFilterProps {
 
 const options = [
   {
+    name: "All",
+    value: "",
+  },
+  {
     name: "Sleeping Bag",
     value: "Sleeping Bag",
   },
