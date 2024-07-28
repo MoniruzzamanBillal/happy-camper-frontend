@@ -21,9 +21,31 @@ import {
 import { useGetAllProductQuery } from "@/redux/features/product/product.api";
 import { TProduct } from "@/types";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "sonner";
 
 const ProductTable = () => {
-  const { data: allProduct, isLoading } = useGetAllProductQuery(undefined);
+  const {
+    data: allProduct,
+    isLoading,
+    refetch: allProductRefetch,
+  } = useGetAllProductQuery(undefined);
+
+  // ! for deleting a product
+  const handleDeleteItem = async (id: string) => {
+    console.log(id);
+
+    const response = await axios.patch(
+      `http://localhost:5000/api/v1/product/delete/${id}`
+    );
+
+    console.log(response?.data);
+
+    if (response?.data?.success) {
+      toast.success(response?.data?.message);
+      allProductRefetch();
+    }
+  };
 
   if (isLoading) {
     return <p>loading ...</p>;
@@ -128,7 +150,11 @@ const ProductTable = () => {
                         {/* bottom button type  */}
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction>Continue</AlertDialogAction>
+                          <AlertDialogAction
+                            onClick={() => handleDeleteItem(product?._id)}
+                          >
+                            Continue
+                          </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>

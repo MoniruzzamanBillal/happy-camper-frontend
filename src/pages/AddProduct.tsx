@@ -7,12 +7,11 @@ import { Button } from "@/components/ui/button";
 import { addProductSchema } from "@/schemas/addProduct.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues } from "react-hook-form";
-import { useState } from "react";
+
 import { useAddProductMutation } from "@/redux/features/product/product.api";
 import { toast } from "sonner";
 import GetImgLink from "@/utills/GetImgLink";
-
-// const imageHostingApi = `https://api.imgbb.com/1/upload?key=00fc9e4302335a502d2035bb196a9314`;
+import { useNavigate } from "react-router-dom";
 
 const options = [
   {
@@ -42,23 +41,15 @@ const options = [
 ];
 
 const AddProduct = () => {
-  const [loading, setLoading] = useState(false);
-  const [addProduct, { isLoading }] = useAddProductMutation();
+  const navigate = useNavigate();
+  const [addProduct] = useAddProductMutation();
 
   //    !  for adding new product
   const handleAddProduct = async (data: FieldValues) => {
     const { image, name, category, price, description, quantity } = data;
     const toastId = toast.loading("Creating pproduct ...");
     try {
-      setLoading(true);
-
-      const imgUrl = GetImgLink(image);
-
-      // const formData = new FormData();
-      // formData.append("image", image);
-
-      // const response = await axios.post(imageHostingApi, formData);
-      // const imgUrl = response?.data?.data?.display_url;
+      const imgUrl = await GetImgLink(image);
 
       const productData = {
         pname: name,
@@ -69,15 +60,16 @@ const AddProduct = () => {
         pdescriptioin: description,
       };
 
-      console.log(productData);
       const res = await addProduct(productData);
 
-      console.log(res?.data);
       if (res?.data?.success) {
         toast.success(res?.data?.message, { id: toastId });
-      }
 
-      setLoading(false);
+        setTimeout(() => {
+          navigate("/all-product");
+          window.location.reload();
+        }, 2000);
+      }
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong!! ", { id: toastId });

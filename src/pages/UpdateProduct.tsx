@@ -13,7 +13,7 @@ import {
 } from "@/redux/features/product/product.api";
 
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import GetImgLink from "@/utills/GetImgLink";
 
 const options = [
@@ -44,7 +44,6 @@ const options = [
 ];
 
 const UpdateProduct = () => {
-  const [loading, setLoading] = useState(false);
   const [updateSingleProduct] = useUpdateSingleProductMutation();
   const navigate = useNavigate();
   const { id } = useParams();

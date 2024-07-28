@@ -20,11 +20,13 @@ const productApi = baseApi.injectEndpoints({
 
     // ! add product
     addProduct: builder.mutation({
-      query: (payload) => ({
-        url: "/product/add-product",
-        method: "POST",
-        body: payload,
-      }),
+      query: (payload) => {
+        return {
+          url: "/product/add-product",
+          method: "POST",
+          body: payload,
+        };
+      },
     }),
 
     // ! update a product
