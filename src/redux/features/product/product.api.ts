@@ -27,6 +27,19 @@ const productApi = baseApi.injectEndpoints({
       }),
     }),
 
+    // ! update a product
+    updateSingleProduct: builder.mutation({
+      query: (payload) => {
+        const { id, productData } = payload;
+
+        return {
+          url: `/product/${id}`,
+          method: "PATCH",
+          body: productData,
+        };
+      },
+    }),
+
     //
   }),
 });
@@ -35,4 +48,5 @@ export const {
   useGetAllProductQuery,
   useAddProductMutation,
   useGetSingleProductQuery,
+  useUpdateSingleProductMutation,
 } = productApi;

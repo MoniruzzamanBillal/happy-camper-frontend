@@ -7,39 +7,111 @@ import { Button } from "@/components/ui/button";
 import { updateProductSchema } from "@/schemas/addProduct.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues } from "react-hook-form";
+import {
+  useGetSingleProductQuery,
+  useUpdateSingleProductMutation,
+} from "@/redux/features/product/product.api";
+
+import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import GetImgLink from "@/utills/GetImgLink";
 
 const options = [
   {
-    name: "test 1",
-    value: "test 1",
+    name: "Sleeping Bag",
+    value: "Sleeping Bag",
   },
   {
-    name: "test 2",
-    value: "test 2",
+    name: "Tent",
+    value: "Tent",
   },
   {
-    name: "test 3",
-    value: "test 3",
+    name: "Kitchen",
+    value: "Kitchen",
+  },
+  {
+    name: "Lantern",
+    value: "Lantern",
+  },
+  {
+    name: "Char coal",
+    value: "Char coal",
+  },
+  {
+    name: "Multifunctional Tool",
+    value: "Multifunctional Tool",
   },
 ];
 
 const UpdateProduct = () => {
+  const [loading, setLoading] = useState(false);
+  const [updateSingleProduct] = useUpdateSingleProductMutation();
   const navigate = useNavigate();
   const { id } = useParams();
 
-  console.log(id);
+  if (!id) {
+    throw new Error("Something went wrong!! ");
+  }
 
-  const defaultValues = {
-    name: "Test name ",
-    category: "test 1",
-    price: "1234",
-    description: "test description 1234567",
+  const { data: productData, isLoading } = useGetSingleProductQuery(id);
+
+  // console.log(productData);
+
+  let defaultValues = {
+    name: productData?.data?.pname,
+    category: productData?.data?.pcategory,
+    price: productData?.data?.pprice,
+    quantity: productData?.data?.pquantity,
+    description: productData?.data?.pdescriptioin,
   };
 
   // ! for updating product
-  const handleUpdateProduct = (data: FieldValues) => {
-    console.log(data);
+  const handleUpdateProduct = async (data: FieldValues) => {
+    const { image, name, category, price, description, quantity } = data;
+
+    const toastId = toast.loading("updating product ...");
+    try {
+      const imgUrl = await GetImgLink(image);
+
+      const productData = {
+        pname: name,
+        pcategory: category,
+        pquantity: quantity,
+        pimage: imgUrl,
+        pprice: price,
+        pdescriptioin: description,
+      };
+
+      await updateSingleProduct({ id, productData });
+
+      toast.success("Product updated successfully !! ", { id: toastId });
+
+      setTimeout(() => {
+        navigate("/all-product");
+      }, 200);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong !! ", { id: toastId });
+    }
   };
+
+  // ! effect for getting default value
+  useEffect(() => {
+    if (productData?.data) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      defaultValues = {
+        name: productData?.data?.pname,
+        category: productData?.data?.pcategory,
+        price: productData?.data?.pprice,
+        description: productData?.data?.pdescriptioin,
+        quantity: productData?.data?.pquantity,
+      };
+    }
+  }, [productData]);
+
+  if (isLoading) {
+    return <p>Loading ...</p>;
+  }
 
   return (
     <div className="UpdateProductContainer  py-8 bg-gray-100 min-h-screen  ">
@@ -64,6 +136,7 @@ const UpdateProduct = () => {
               options={options}
             />
             <CamperInput type="file" label="Image :" name="image" />
+            <CamperInput type="number" label="Quantity :" name="quantity" />
             <CamperInput type="number" label="Price :" name="price" />
             <CamperTextArea label="Product description :" name="description" />
             <Button className="px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base bg-green-600 hover:bg-green-700 active:scale-95 duration-500">

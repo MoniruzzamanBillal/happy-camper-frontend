@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import CamperForm from "@/components/form/CamperForm";
 import CamperInput from "@/components/form/CamperInput";
 import CamperSelect from "@/components/form/CamperSelect";
@@ -12,8 +10,9 @@ import { FieldValues } from "react-hook-form";
 import { useState } from "react";
 import { useAddProductMutation } from "@/redux/features/product/product.api";
 import { toast } from "sonner";
+import GetImgLink from "@/utills/GetImgLink";
 
-const imageHostingApi = `https://api.imgbb.com/1/upload?key=00fc9e4302335a502d2035bb196a9314`;
+// const imageHostingApi = `https://api.imgbb.com/1/upload?key=00fc9e4302335a502d2035bb196a9314`;
 
 const options = [
   {
@@ -53,11 +52,13 @@ const AddProduct = () => {
     try {
       setLoading(true);
 
-      const formData = new FormData();
-      formData.append("image", image);
+      const imgUrl = GetImgLink(image);
 
-      const response = await axios.post(imageHostingApi, formData);
-      const imgUrl = response?.data?.data?.display_url;
+      // const formData = new FormData();
+      // formData.append("image", image);
+
+      // const response = await axios.post(imageHostingApi, formData);
+      // const imgUrl = response?.data?.data?.display_url;
 
       const productData = {
         pname: name,

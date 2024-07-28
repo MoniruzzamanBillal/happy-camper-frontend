@@ -18,9 +18,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useGetAllProductQuery } from "@/redux/features/product/product.api";
+import { TProduct } from "@/types";
 import { Link } from "react-router-dom";
 
 const ProductTable = () => {
+  const { data: allProduct, isLoading } = useGetAllProductQuery(undefined);
+
+  if (isLoading) {
+    return <p>loading ...</p>;
+  }
+
   return (
     <div className="ProductTableContainer py-8 bg-gray-100 min-h-screen ">
       <div className="ProductTableWrapper w-[96%] sm:w-[92%] md:w-[90%] m-auto ">
@@ -66,63 +74,68 @@ const ProductTable = () => {
           {/* table body starts  */}
           <TableBody className="  text-xs sm:text-sm md:text-base text-gray-600 ">
             {/* table row starts  */}
-            <TableRow className="font-medium">
-              {/* product name  */}
-              <TableCell>Product name</TableCell>
-              {/* product Category  */}
-              <TableCell>Product category</TableCell>
-              {/* product image  */}
-              <TableCell className="flex justify-center items-center">
-                <img
-                  className="size-[2rem] xsm:size-[2.5rem] sm:size-[3rem]"
-                  src="https://i.ibb.co/DtqW079/sleeping-Bag.jpg"
-                  alt=""
-                />
-              </TableCell>
-              {/* product price  */}
-              <TableCell>Product price</TableCell>
-              {/* update button   */}
-              <TableCell>
-                <Link to={"/update-product/123456"}>
-                  <Button className=" px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base bg-green-600 hover:bg-green-700 active:scale-95 duration-500 ">
-                    Update
-                  </Button>
-                </Link>
-              </TableCell>
-              {/* update delete   */}
-              <TableCell>
-                {/* delete button  */}
-                <AlertDialog>
-                  {/* alert trigger  */}
-                  <AlertDialogTrigger asChild>
-                    <Button className=" px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base bg-red-600 hover:bg-red-700 active:scale-95 duration-500 ">
-                      Delete
-                    </Button>
-                  </AlertDialogTrigger>
 
-                  {/* alert content  */}
-                  <AlertDialogContent>
-                    {/* header and content type  */}
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Are you absolutely sure?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
+            {allProduct?.data &&
+              allProduct?.data?.map((product: TProduct, ind: number) => (
+                <TableRow className="font-medium" key={ind}>
+                  {/* product name  */}
+                  <TableCell> {product?.pname} </TableCell>
+                  {/* product Category  */}
+                  <TableCell> {product?.pcategory} </TableCell>
+                  {/* product image  */}
+                  <TableCell className="flex justify-center items-center">
+                    <img
+                      className="size-[2rem] xsm:size-[2.5rem] sm:size-[3rem]"
+                      src={product?.pimage}
+                      alt="prod img"
+                    />
+                  </TableCell>
+                  {/* product price  */}
+                  <TableCell> {product?.pprice} </TableCell>
+                  {/* update button   */}
+                  <TableCell>
+                    <Link to={`/update-product/${product?._id}`}>
+                      <Button className=" px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base bg-green-600 hover:bg-green-700 active:scale-95 duration-500 ">
+                        Update
+                      </Button>
+                    </Link>
+                  </TableCell>
+                  {/* update delete   */}
+                  <TableCell>
+                    {/* delete button  */}
+                    <AlertDialog>
+                      {/* alert trigger  */}
+                      <AlertDialogTrigger asChild>
+                        <Button className=" px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base bg-red-600 hover:bg-red-700 active:scale-95 duration-500 ">
+                          Delete
+                        </Button>
+                      </AlertDialogTrigger>
 
-                    {/* bottom button type  */}
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction>Continue</AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </TableCell>
-            </TableRow>
+                      {/* alert content  */}
+                      <AlertDialogContent>
+                        {/* header and content type  */}
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your account and remove your data from our
+                            servers.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+
+                        {/* bottom button type  */}
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction>Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </TableCell>
+                </TableRow>
+              ))}
+
             {/* table row ends  */}
           </TableBody>
           {/* table body ends  */}

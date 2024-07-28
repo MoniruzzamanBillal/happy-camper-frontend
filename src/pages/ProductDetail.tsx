@@ -13,16 +13,8 @@ const ProductDetail = () => {
 
   // console.log(productData?.data);
 
-  const {
-    _id,
-    pname,
-    pcategory,
-    pquantity,
-    pprice,
-    pimage,
-    pdescriptioin,
-    __v,
-  } = productData?.data;
+  const { _id, pname, pcategory, pquantity, pprice, pimage, pdescriptioin } =
+    productData?.data;
 
   return (
     <div className="ProductDetailContainer  ">
