@@ -16,8 +16,21 @@ import { TProduct } from "@/types/product";
 import { useEffect, useState } from "react";
 
 const Products = () => {
-  const { data: allProduct, isLoading } = useGetAllProductQuery(undefined);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [priceRange, setPriceRange] = useState<number | null>(null);
+  const [category, setCategory] = useState("");
+  const [sortBy, setSortBy] = useState("");
+
+  const [params, setParams] = useState<Record<string, unknown> | undefined>(
+    undefined
+  );
+
+  const { data: allProduct, isLoading } = useGetAllProductQuery(params);
   const [isXl, setIsXl] = useState(false);
+
+  // console.log(params);
+
+  console.log(allProduct);
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,6 +42,33 @@ const Products = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  //! Use effect to track param value
+  useEffect(() => {
+    const updateParam = () => {
+      const newParam: Record<string, unknown> = {};
+
+      if (searchTerm) {
+        newParam.searchTerm = searchTerm;
+      }
+
+      if (priceRange) {
+        newParam.priceRange = priceRange;
+      }
+
+      if (category) {
+        newParam.category = category;
+      }
+
+      if (sortBy) {
+        newParam.sortBy = sortBy;
+      }
+
+      setParams(newParam);
+    };
+
+    updateParam();
+  }, [searchTerm, priceRange, category, sortBy]);
 
   if (isLoading) {
     return <p>loading ...</p>;
@@ -43,11 +83,13 @@ const Products = () => {
             type="text"
             placeholder="Looking for...."
             className=" border-none "
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <HoverBorderGradient
             containerClassName="rounded-full"
             as="button"
-            className=" bg-white text-black font-semibold dark:text-white px-5 py-1 "
+            className="  bg-white text-black font-semibold dark:text-white px-5 py-1 "
           >
             <p>Search</p>
           </HoverBorderGradient>
@@ -60,7 +102,12 @@ const Products = () => {
 
           {/* filter section   */}
           <div className="contentLeft w-0 xl:w-[30%] hidden xl:block  ">
-            <ProductsFilter />
+            <ProductsFilter
+              priceRange={priceRange}
+              category={category}
+              setPriceRange={setPriceRange}
+              setCategory={setCategory}
+            />
             {/*  */}
           </div>
           {/* left section ends  */}
@@ -96,7 +143,12 @@ const Products = () => {
                     </div>
                   </SheetTrigger>
                   <SheetContent>
-                    <ProductsFilter />
+                    <ProductsFilter
+                      priceRange={priceRange}
+                      category={category}
+                      setPriceRange={setPriceRange}
+                      setCategory={setCategory}
+                    />
                   </SheetContent>
                 </Sheet>
               ) : (
@@ -108,7 +160,7 @@ const Products = () => {
                 <p className="text-gray-600 "> sort by : </p>
 
                 {/* input section  */}
-                <Select>
+                <Select onValueChange={(value) => setSortBy(value)}>
                   <SelectTrigger className="w-[14rem]  outline-none border-gray-400 ring-0 focus:ring-0  ">
                     <SelectValue placeholder="sort by price" />
                   </SelectTrigger>
