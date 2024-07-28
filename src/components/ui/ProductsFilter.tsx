@@ -43,10 +43,10 @@ const options = [
 const ProductsFilter = ({
   priceRange,
   category,
-
   setPriceRange,
   setCategory,
-}: TProductsFilterProps) => {
+  handleAddReset,
+}) => {
   return (
     <div className="ProductsFilterContainer flex flex-col gap-y-6">
       <h1 className=" mb-3   font-semibold text-indigo-500 text-lg xsm:text-xl sm:text-3xl md:text-2xl xl:text-3xl text-shadow-blue">
@@ -110,7 +110,10 @@ const ProductsFilter = ({
 
       {/* reset btn  */}
       <div className="resetBtn w-[98%] m-auto   ">
-        <Button className="bg-red-600 hover:bg-red-700 hover:shadow-md hover:scale-[1.02] active:scale-100 duration-200 w-full  ">
+        <Button
+          className="bg-red-600 hover:bg-red-700 hover:shadow-md hover:scale-[1.02] active:scale-100 duration-200 w-full  "
+          onClick={() => handleAddReset()}
+        >
           Reset
         </Button>
       </div>

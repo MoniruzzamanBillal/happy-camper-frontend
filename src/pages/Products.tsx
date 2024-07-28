@@ -28,9 +28,16 @@ const Products = () => {
   const { data: allProduct, isLoading } = useGetAllProductQuery(params);
   const [isXl, setIsXl] = useState(false);
 
-  console.log(sort);
-
   // console.log(allProduct);
+
+  // ! for reseting filter
+  const handleAddReset = () => {
+    setParams(undefined);
+    setSearchTerm("");
+    setPprice(null);
+    setSortBy("");
+    setpPcategory("");
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -107,6 +114,7 @@ const Products = () => {
               category={pcategory}
               setPriceRange={setPprice}
               setCategory={setpPcategory}
+              handleAddReset={handleAddReset}
             />
             {/*  */}
           </div>
@@ -148,6 +156,7 @@ const Products = () => {
                       category={pcategory}
                       setPriceRange={setPprice}
                       setCategory={setpPcategory}
+                      handleAddReset={handleAddReset}
                     />
                   </SheetContent>
                 </Sheet>
