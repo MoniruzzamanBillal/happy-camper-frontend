@@ -152,8 +152,6 @@ const ProductCart = () => {
     return <p>loading ... </p>;
   }
 
-  console.log(cartData?.data?.length);
-
   return (
     <div className="ProductCartContainer">
       <div className="ProductCartWrapper   bg-gray-100 py-6 sm:py-8 lg:py-12">
