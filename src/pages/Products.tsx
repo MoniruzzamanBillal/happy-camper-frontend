@@ -1,5 +1,6 @@
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { Input } from "@/components/ui/input";
+import NoProduct from "@/components/ui/NoProduct";
 import ProductCard from "@/components/ui/ProductCard";
 import ProductsFilter from "@/components/ui/ProductsFilter";
 import {
@@ -86,6 +87,8 @@ const Products = () => {
 
     updateParam();
   }, [searchTerm, pprice, pcategory, sort]);
+
+  // console.log(allProduct?.data?.length);
 
   if (isLoading) {
     return <p>loading ...</p>;
@@ -199,10 +202,14 @@ const Products = () => {
             <div className="productsContent  py-3 px-4 ">
               {/* all products  */}
               <div className="allProducts grid grid-cols-1 sm:grid-cols-2 xmd:grid-cols-3 gap-x-5 gap-y-8 ">
-                {allProduct?.data &&
+                {allProduct?.data?.length === 0 ? (
+                  <NoProduct />
+                ) : (
+                  allProduct?.data &&
                   allProduct?.data?.map((product: TProduct, ind: number) => (
                     <ProductCard product={product} key={ind} />
-                  ))}
+                  ))
+                )}
               </div>
             </div>
             {/* products content ends */}

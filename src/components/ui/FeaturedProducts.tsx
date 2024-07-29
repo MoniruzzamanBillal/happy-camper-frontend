@@ -7,8 +7,6 @@ const FeaturedProducts = () => {
     limit: 5,
   });
 
-  console.log(featuredProducts);
-
   if (isLoading) {
     return <p>loading .. </p>;
   }

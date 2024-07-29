@@ -1,3 +1,4 @@
+import NoCartItem from "@/components/ui/NoCartItem";
 import {
   useAddCartQuantityMutation,
   useDecreaseCartQuantityMutation,
@@ -151,6 +152,8 @@ const ProductCart = () => {
     return <p>loading ... </p>;
   }
 
+  console.log(cartData?.data?.length);
+
   return (
     <div className="ProductCartContainer">
       <div className="ProductCartWrapper   bg-gray-100 py-6 sm:py-8 lg:py-12">
@@ -164,7 +167,10 @@ const ProductCart = () => {
           <div className="mb-5 flex flex-col sm:mb-8 sm:divide-y sm:border-t sm:border-b">
             {/* product - start  */}
 
-            {cartData?.data &&
+            {cartData?.data?.length === 0 ? (
+              <NoCartItem />
+            ) : (
+              cartData?.data &&
               cartData?.data?.map((item: TCartItrm, ind: number) => (
                 <div
                   key={ind}
@@ -253,48 +259,56 @@ const ProductCart = () => {
                     {/*  */}
                   </div>
                 </div>
-              ))}
+              ))
+            )}
           </div>
 
           {/* bottom section strts  */}
           {/* totals - start  */}
-          <div className="flex flex-col items-end gap-4  ">
-            {/* price card starts  */}
-            <div className="w-full  bg-white border border-gray-200 rounded-md shadow-md p-4 sm:max-w-xs">
-              <div className="space-y-1">
-                <div className="flex justify-between gap-4 text-gray-900">
-                  <span>Subtotal</span>
-                  <span>${totalPrice}</span>
+          {cartData?.data?.length === 0 ? (
+            ""
+          ) : (
+            <div className="flex flex-col items-end gap-4  ">
+              {/* price card starts  */}
+              <div className="w-full  bg-white border border-gray-200 rounded-md shadow-md p-4 sm:max-w-xs">
+                <div className="space-y-1">
+                  <div className="flex justify-between gap-4 text-gray-900">
+                    <span>Subtotal</span>
+                    <span>${totalPrice}</span>
+                  </div>
+
+                  <div className="flex justify-between gap-4 text-gray-700">
+                    <span>Shipping</span>
+                    <span>$4.99</span>
+                  </div>
                 </div>
 
-                <div className="flex justify-between gap-4 text-gray-700">
-                  <span>Shipping</span>
-                  <span>$4.99</span>
-                </div>
-              </div>
+                <div className="mt-4 border-t pt-4">
+                  <div className="flex items-start justify-between gap-4 text-gray-800">
+                    <span className="text-lg font-bold">Total</span>
 
-              <div className="mt-4 border-t pt-4">
-                <div className="flex items-start justify-between gap-4 text-gray-800">
-                  <span className="text-lg font-bold">Total</span>
-
-                  <span className="flex flex-col items-end">
-                    <span className="text-lg font-bold">
-                      $ {totalPrice + 4.99} USD
+                    <span className="flex flex-col items-end">
+                      <span className="text-lg font-bold">
+                        $ {totalPrice + 4.99} USD
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        including VAT
+                      </span>
                     </span>
-                    <span className="text-sm text-gray-500">including VAT</span>
-                  </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* price card ends   */}
+              {/* price card ends   */}
 
-            <button
-              className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
-              onClick={() => handleCheckout()}
-            >
-              Check out
-            </button>
-          </div>
+              <button
+                className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
+                onClick={() => handleCheckout()}
+              >
+                Check out
+              </button>
+            </div>
+          )}
+
           {/* totals - end  */}
         </div>
       </div>
