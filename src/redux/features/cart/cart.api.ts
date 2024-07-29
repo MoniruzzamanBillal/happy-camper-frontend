@@ -45,6 +45,17 @@ const cartApi = baseApi.injectEndpoints({
       },
     }),
 
+    // ! delete cart item
+    deleteCartQuantity: builder.mutation({
+      query: (payload: { pid: string }) => {
+        return {
+          url: "/cart/delete-cart",
+          method: "PATCH",
+          body: payload,
+        };
+      },
+    }),
+
     //
   }),
 });
@@ -55,4 +66,5 @@ export const {
   useGetCartQuery,
   useAddCartQuantityMutation,
   useDecreaseCartQuantityMutation,
+  useDeleteCartQuantityMutation,
 } = cartApi;

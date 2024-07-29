@@ -1,18 +1,25 @@
 import {
   useAddCartQuantityMutation,
   useDecreaseCartQuantityMutation,
+  useDeleteCartQuantityMutation,
   useGetCartQuery,
 } from "@/redux/features/cart/cart.api";
 import { TCartItrm } from "@/types";
+import { useEffect, useState } from "react";
 
 import { toast } from "sonner";
 
 const ProductCart = () => {
-  const { data: cartData, refetch: cartDataRefetch } =
-    useGetCartQuery(undefined);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const {
+    data: cartData,
+    refetch: cartDataRefetch,
+    isLoading,
+  } = useGetCartQuery(undefined);
 
   const [addCartQuantity] = useAddCartQuantityMutation();
   const [decreaseCartQuantity] = useDecreaseCartQuantityMutation();
+  const [deleteCartQuantity] = useDeleteCartQuantityMutation();
 
   // console.log(cartData?.data);
 
@@ -39,6 +46,7 @@ const ProductCart = () => {
       }
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong !! ", { id: toadtId });
     }
   };
 
@@ -68,13 +76,59 @@ const ProductCart = () => {
       }
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong !! ", { id: toadtId });
     }
   };
 
   // ! for deleting cart item
-  const handleDeleteItem = (item: TCartItrm) => {
-    console.log(item);
+  const handleDeleteItem = async (item: TCartItrm) => {
+    const toadtId = toast.loading("Deleting  from cart !! ");
+
+    try {
+      const data = {
+        pid: item?.pid,
+      };
+
+      const result = await deleteCartQuantity(data);
+
+      if (result?.error) {
+        toast.error("Something went wrong !! ", { id: toadtId });
+      }
+      // ! if no error
+      if (result?.data?.success) {
+        toast.success(result?.data?.message, { id: toadtId });
+        cartDataRefetch();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong !! ", { id: toadtId });
+    }
   };
+
+  useEffect(() => {
+    cartDataRefetch();
+  }, [cartData, isLoading]);
+
+  // ! for calculatilng total price
+  useEffect(() => {
+    console.log(cartData?.data);
+
+    let total = 0;
+
+    if (cartData?.data) {
+      total = cartData?.data.reduce((total: number, item: TCartItrm) => {
+        return total + item?.pprice * item?.oquantity;
+      }, 0);
+    }
+
+    console.log(total);
+
+    setTotalPrice(total);
+  }, [cartData, isLoading]);
+
+  if (isLoading) {
+    return <p>loading ... </p>;
+  }
 
   return (
     <div className="ProductCartContainer">
@@ -168,7 +222,7 @@ const ProductCart = () => {
                       {/* product price starts  */}
                       <div className="ml-4 pt-3 sm:pt-2 md:ml-8 lg:ml-16">
                         <span className="block font-bold text-gray-800 md:text-lg">
-                          $15.00
+                          $ {item?.pprice * item?.oquantity}
                         </span>
                       </div>
                       {/* product price ends */}
@@ -187,12 +241,12 @@ const ProductCart = () => {
             {/* price card starts  */}
             <div className="w-full  bg-white border border-gray-200 rounded-md shadow-md p-4 sm:max-w-xs">
               <div className="space-y-1">
-                <div className="flex justify-between gap-4 text-gray-500">
+                <div className="flex justify-between gap-4 text-gray-900">
                   <span>Subtotal</span>
-                  <span>$129.99</span>
+                  <span>${totalPrice}</span>
                 </div>
 
-                <div className="flex justify-between gap-4 text-gray-500">
+                <div className="flex justify-between gap-4 text-gray-700">
                   <span>Shipping</span>
                   <span>$4.99</span>
                 </div>
@@ -203,7 +257,9 @@ const ProductCart = () => {
                   <span className="text-lg font-bold">Total</span>
 
                   <span className="flex flex-col items-end">
-                    <span className="text-lg font-bold">$134.98 USD</span>
+                    <span className="text-lg font-bold">
+                      $ {totalPrice + 4.99} USD
+                    </span>
                     <span className="text-sm text-gray-500">including VAT</span>
                   </span>
                 </div>
