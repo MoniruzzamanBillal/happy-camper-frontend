@@ -4,12 +4,18 @@ import {
   useDeleteCartQuantityMutation,
   useGetCartQuery,
 } from "@/redux/features/cart/cart.api";
+import { setCartItem } from "@/redux/features/cart/cart.slice";
+import { useAppDispatch } from "@/redux/hook";
 import { TCartItrm } from "@/types";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { toast } from "sonner";
 
 const ProductCart = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [totalPrice, setTotalPrice] = useState(0);
   const {
     data: cartData,
@@ -34,6 +40,8 @@ const ProductCart = () => {
       };
 
       const result = await addCartQuantity(data);
+
+      console.log(result);
 
       if (result?.error) {
         toast.error(result?.error?.data?.message, { id: toadtId });
@@ -105,14 +113,29 @@ const ProductCart = () => {
     }
   };
 
+  // ! for checkout page
+  const handleCheckout = () => {
+    const cartItem = cartData?.data?.map((cart: TCartItrm) => {
+      return {
+        pid: cart?.pid,
+        oquantity: cart?.oquantity,
+      };
+    });
+
+    dispatch(setCartItem(cartItem));
+
+    setTimeout(() => {
+      navigate("/checkout");
+    }, 500);
+  };
+
   useEffect(() => {
     cartDataRefetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartData, isLoading]);
 
   // ! for calculatilng total price
   useEffect(() => {
-    console.log(cartData?.data);
-
     let total = 0;
 
     if (cartData?.data) {
@@ -120,8 +143,6 @@ const ProductCart = () => {
         return total + item?.pprice * item?.oquantity;
       }, 0);
     }
-
-    console.log(total);
 
     setTotalPrice(total);
   }, [cartData, isLoading]);
@@ -267,7 +288,10 @@ const ProductCart = () => {
             </div>
             {/* price card ends   */}
 
-            <button className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">
+            <button
+              className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
+              onClick={() => handleCheckout()}
+            >
               Check out
             </button>
           </div>

@@ -12,6 +12,7 @@ import Test from "@/pages/Test";
 import ProductTable from "@/pages/ProductTable";
 import AddProduct from "@/pages/AddProduct";
 import UpdateProduct from "@/pages/UpdateProduct";
+import OrderSuccess from "@/pages/OrderSuccess";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/test",
         element: <Test />,
+      },
+      {
+        path: "/order-success",
+        element: <OrderSuccess />,
       },
     ],
   },
