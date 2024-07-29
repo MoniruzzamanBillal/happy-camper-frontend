@@ -7,6 +7,7 @@ interface TProductsFilterProps {
 
   setPriceRange: (range: number) => void;
   setCategory: (category: string) => void;
+  handleAddReset: () => void;
 }
 
 const options = [
@@ -21,10 +22,6 @@ const options = [
   {
     name: "Tent",
     value: "Tent",
-  },
-  {
-    name: "Kitchen",
-    value: "Kitchen",
   },
   {
     name: "Lantern",
@@ -46,7 +43,7 @@ const ProductsFilter = ({
   setPriceRange,
   setCategory,
   handleAddReset,
-}) => {
+}: TProductsFilterProps) => {
   return (
     <div className="ProductsFilterContainer flex flex-col gap-y-6">
       <h1 className=" mb-3   font-semibold text-indigo-500 text-lg xsm:text-xl sm:text-3xl md:text-2xl xl:text-3xl text-shadow-blue">
@@ -58,8 +55,7 @@ const ProductsFilter = ({
 
         <div className="priceRangeInput">
           <Slider
-            defaultValue={[33]}
-            value={[priceRange]}
+            value={[priceRange ?? 0]}
             onValueChange={(value) => setPriceRange(value[0])}
             max={500}
             step={1}

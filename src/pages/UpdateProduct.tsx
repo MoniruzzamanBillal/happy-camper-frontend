@@ -15,33 +15,7 @@ import {
 import { toast } from "sonner";
 import { useEffect } from "react";
 import GetImgLink from "@/utills/GetImgLink";
-
-const options = [
-  {
-    name: "Sleeping Bag",
-    value: "Sleeping Bag",
-  },
-  {
-    name: "Tent",
-    value: "Tent",
-  },
-  {
-    name: "Kitchen",
-    value: "Kitchen",
-  },
-  {
-    name: "Lantern",
-    value: "Lantern",
-  },
-  {
-    name: "Char coal",
-    value: "Char coal",
-  },
-  {
-    name: "Multifunctional Tool",
-    value: "Multifunctional Tool",
-  },
-];
+import { categoryOptions } from "@/utills/Constants";
 
 const UpdateProduct = () => {
   const [updateSingleProduct] = useUpdateSingleProductMutation();
@@ -132,7 +106,7 @@ const UpdateProduct = () => {
             <CamperSelect
               name="category"
               label="Category :"
-              options={options}
+              options={categoryOptions}
             />
             <CamperInput type="file" label="Image :" name="image" />
             <CamperInput type="number" label="Quantity :" name="quantity" />

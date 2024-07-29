@@ -49,7 +49,7 @@ const BestSeller = () => {
     <div className="BestSellerContainer bg-gray-100 py-8">
       <div className="BestSellerWrapper w-[96%] sm:w-[92%] md:w-[90%] m-auto ">
         <h1 className=" mb-6  md:mb-8 xmd:mb-12 lg:mb-14 text-center font-semibold text-indigo-500 text-lg xsm:text-xl sm:text-3xl md:text-3xl xl:text-4xl text-shadow-blue">
-          Best seller
+          Recommedned products
         </h1>
 
         {/* best seller items starts  */}

@@ -14,8 +14,11 @@ import { useGetAllProductQuery } from "@/redux/features/product/product.api";
 import { TProduct } from "@/types/product";
 
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const Products = () => {
+  const { ParamCategory } = useParams();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [pprice, setPprice] = useState<number | null>(null);
   const [pcategory, setpPcategory] = useState("");
@@ -49,6 +52,13 @@ const Products = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // ! to set category if parameter exists
+  useEffect(() => {
+    if (ParamCategory) {
+      setpPcategory(ParamCategory);
+    }
+  }, [ParamCategory]);
 
   //! Use effect to track param value
   useEffect(() => {

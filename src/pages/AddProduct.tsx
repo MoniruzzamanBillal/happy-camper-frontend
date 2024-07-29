@@ -12,33 +12,7 @@ import { useAddProductMutation } from "@/redux/features/product/product.api";
 import { toast } from "sonner";
 import GetImgLink from "@/utills/GetImgLink";
 import { useNavigate } from "react-router-dom";
-
-const options = [
-  {
-    name: "Sleeping Bag",
-    value: "Sleeping Bag",
-  },
-  {
-    name: "Tent",
-    value: "Tent",
-  },
-  {
-    name: "Kitchen",
-    value: "Kitchen",
-  },
-  {
-    name: "Lantern",
-    value: "Lantern",
-  },
-  {
-    name: "Char coal",
-    value: "Char coal",
-  },
-  {
-    name: "Multifunctional Tool",
-    value: "Multifunctional Tool",
-  },
-];
+import { categoryOptions } from "@/utills/Constants";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -95,7 +69,7 @@ const AddProduct = () => {
             <CamperSelect
               name="category"
               label="Category :"
-              options={options}
+              options={categoryOptions}
             />
             <CamperInput type="number" label="Quantity :" name="quantity" />
             <CamperInput type="number" label="Price :" name="price" />

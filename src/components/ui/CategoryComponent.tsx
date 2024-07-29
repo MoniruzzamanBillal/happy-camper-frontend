@@ -7,23 +7,23 @@ export type TProductcategory = {
 
 const productsCategory: TProductcategory[] = [
   {
-    productName: "Mobile phone",
+    productName: "Sleeping Bag",
     productIMG: "https://i.ibb.co/FzF0q8y/phone.jpg",
   },
   {
-    productName: "Earphone",
+    productName: "Tent",
     productIMG: "https://i.ibb.co/RpK31MH/earphone.jpg",
   },
   {
-    productName: "Adapter",
+    productName: "Lantern",
     productIMG: "https://i.ibb.co/CwbG0N8/adapter.jpg",
   },
   {
-    productName: "Smart watch",
+    productName: "Char coal",
     productIMG: "https://i.ibb.co/Qm8xg1b/smartwtch.jpg",
   },
   {
-    productName: "Power bank",
+    productName: "Multifunctional Tool",
     productIMG: "https://i.ibb.co/dK0x4ZY/power-bank.jpg",
   },
 ];

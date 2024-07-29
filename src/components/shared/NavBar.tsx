@@ -22,17 +22,19 @@ const Navbar = () => {
         }}
       >
         {/* logo section */}
-
-        <div className=" text-2xl cursor-pointer flex items-center  gap-x-2">
-          <Link to={"/"}>
+        <Link to={"/"}>
+          <div className=" text-2xl cursor-pointer flex items-center  gap-x-2">
             <img
               src="https://i.ibb.co/TL2yHhb/Daco-4947937.png"
               className="w-[4rem]"
               alt="logo"
             />
-          </Link>
-          <p className=" text-3xl font-bold font-headingFont ">Happy campers</p>
-        </div>
+
+            <p className=" text-3xl font-bold font-headingFont ">
+              Happy <span className="   text-indigo-500">campers</span>{" "}
+            </p>
+          </div>
+        </Link>
         {/* Menu icon */}
         <div
           onClick={() => setOpen(!open)}
