@@ -1,7 +1,9 @@
 /* eslint-disable no-unsafe-optional-chaining */
+import { useAddToCartMutation } from "@/redux/features/cart/cart.api";
 import { useGetSingleProductQuery } from "@/redux/features/product/product.api";
 import GlassZoomImage from "@/utills/GlassZoomImage";
 import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -12,6 +14,36 @@ const ProductDetail = () => {
 
   const { data: productData, isLoading: productDataLoading } =
     useGetSingleProductQuery(id);
+  const [addToCart] = useAddToCartMutation();
+
+  // console.log(productData?.data);
+
+  // ! for adding product in cart
+  const handleAddCart = async () => {
+    const toastId = toast.loading("Adding product to cart !! ");
+
+    try {
+      const cartData = {
+        pid: id,
+        pprice: productData?.data?.pprice,
+        pimage: productData?.data?.pimage,
+        pname: productData?.data?.pname,
+      };
+
+      const result = await addToCart(cartData);
+
+      if (result?.data) {
+        toast.success(result?.data?.message, { id: toastId });
+      }
+
+      if (result?.error) {
+        toast.success(result?.error?.data?.message, { id: toastId });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong !! ", { id: toastId });
+    }
+  };
 
   if (productDataLoading) {
     return <p>Loading ... </p>;
@@ -79,12 +111,12 @@ const ProductDetail = () => {
 
                 {/* {/* buttons - start  */}
                 <div className="flex gap-2.5">
-                  <a
-                    href="#"
-                    className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
+                  <p
+                    className="inline-block cursor-pointer flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
+                    onClick={() => handleAddCart()}
                   >
                     Add to cart
-                  </a>
+                  </p>
                 </div>
                 {/* buttons - end  */}
 

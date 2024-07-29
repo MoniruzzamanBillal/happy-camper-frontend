@@ -1,20 +1,79 @@
-import { useState } from "react";
+import {
+  useAddCartQuantityMutation,
+  useDecreaseCartQuantityMutation,
+  useGetCartQuery,
+} from "@/redux/features/cart/cart.api";
+import { TCartItrm } from "@/types";
+
+import { toast } from "sonner";
 
 const ProductCart = () => {
-  const [cartItem, setCartItem] = useState(1);
+  const { data: cartData, refetch: cartDataRefetch } =
+    useGetCartQuery(undefined);
+
+  const [addCartQuantity] = useAddCartQuantityMutation();
+  const [decreaseCartQuantity] = useDecreaseCartQuantityMutation();
+
+  // console.log(cartData?.data);
 
   //   ! for adding item
-  const handleAddItem = () => {
-    setCartItem((prev) => prev + 1);
+  const handleAddItem = async (item: TCartItrm) => {
+    const toadtId = toast.loading("Adding to cart !! ");
+
+    try {
+      const data = {
+        pid: item?.pid,
+        oquantity: 1,
+      };
+
+      const result = await addCartQuantity(data);
+
+      if (result?.error) {
+        toast.error(result?.error?.data?.message, { id: toadtId });
+      }
+
+      // ! if no error
+      if (result?.data?.success) {
+        toast.success(result?.data?.message, { id: toadtId });
+        cartDataRefetch();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //   ! for reducing item
-  const handleReduceItem = () => {
-    if (cartItem <= 0) {
-      setCartItem(0);
-    } else {
-      setCartItem((prev) => prev - 1);
+  const handleReduceItem = async (item: TCartItrm) => {
+    if (item?.oquantity <= 1) {
+      return;
     }
+
+    const toadtId = toast.loading("Removing from cart !! ");
+
+    try {
+      const data = {
+        pid: item?.pid,
+      };
+
+      const result = await decreaseCartQuantity(data);
+
+      if (result?.error) {
+        toast.error("Something went wrong !! ", { id: toadtId });
+      }
+
+      // ! if no error
+      if (result?.data?.success) {
+        toast.success(result?.data?.message, { id: toadtId });
+        cartDataRefetch();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // ! for deleting cart item
+  const handleDeleteItem = (item: TCartItrm) => {
+    console.log(item);
   };
 
   return (
@@ -29,88 +88,97 @@ const ProductCart = () => {
 
           <div className="mb-5 flex flex-col sm:mb-8 sm:divide-y sm:border-t sm:border-b">
             {/* product - start  */}
-            <div className=" bg-white border border-gray-200  py-5 sm:py-8 px-5 rounded-md shadow-md  ">
-              <div className="flex flex-wrap gap-4 sm:py-2.5 lg:gap-6">
-                {/* product image section starts  */}
-                <div className="sm:-my-2.5">
-                  <div className=" imgContainer group relative block h-40 w-24 overflow-hidden rounded-lg bg-gray-100 sm:h-56 sm:w-40">
-                    <img
-                      src="https://plus.unsplash.com/premium_photo-1681169152396-f22381eae362?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      loading="lazy"
-                      alt="product image "
-                      className="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
-                    />
-                  </div>
-                </div>
-                {/* product image section ends  */}
 
-                {/* product detail section starts */}
-                <div className="flex flex-1 flex-col justify-between">
-                  <div>
-                    <p className="mb-1 inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl">
-                      Product name
-                    </p>
-                  </div>
+            {cartData?.data &&
+              cartData?.data?.map((item: TCartItrm, ind: number) => (
+                <div
+                  key={ind}
+                  className=" bg-white border border-gray-200 my-4 py-2 sm:py-4 px-5 rounded-md shadow-md  "
+                >
+                  <div className="flex flex-wrap gap-4 sm:py-2.5 lg:gap-6">
+                    {/* product image section starts  */}
+                    <div className="sm:-my-2.5">
+                      <div className=" imgContainer group relative block h-40 w-24 overflow-hidden rounded-lg bg-gray-100 sm:h-56 sm:w-40">
+                        <img
+                          src={item?.pimage}
+                          loading="lazy"
+                          alt="product image "
+                          className="h-full w-full object-fit object-center transition duration-200 group-hover:scale-110"
+                        />
+                      </div>
+                    </div>
+                    {/* product image section ends  */}
 
-                  <div>
-                    <span className="mb-1 block font-bold text-gray-800 md:text-lg">
-                      $15.00
-                    </span>
-                  </div>
-                </div>
-                {/* product detail section starts */}
-
-                {/* right section starts  */}
-                <div className="  flex w-full justify-between border-t pt-4 sm:w-auto sm:border-none sm:pt-0">
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="flex justify-between  h-12 w-20 overflow-hidden rounded border">
-                      {/* product quantity starts  */}
-                      <div className=" w-[70%]  cartContent flex justify-center items-center ">
-                        <p className="    ring-inset ring-indigo-300 transition duration-100 focus:ring">
-                          {cartItem}
+                    {/* product detail section starts */}
+                    <div className="flex flex-1 flex-col justify-between">
+                      <div>
+                        <p className="mb-1 inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl">
+                          {item?.pname}
                         </p>
                       </div>
-                      {/* product quantity ends   */}
 
-                      {/* button section starts  */}
+                      <div>
+                        <span className="mb-1 block font-bold text-gray-800 md:text-lg">
+                          $ {item?.pprice}
+                        </span>
+                      </div>
+                    </div>
+                    {/* product detail section starts */}
 
-                      <div className=" w-[30%] flex flex-col divide-y border-l">
+                    {/* right section starts  */}
+                    <div className="  flex w-full justify-between border-t pt-4 sm:w-auto sm:border-none sm:pt-0">
+                      <div className="flex flex-col items-start gap-2">
+                        <div className="flex justify-between  h-12 w-20 overflow-hidden rounded border">
+                          {/* product quantity starts  */}
+                          <div className=" w-[70%]  cartContent flex justify-center items-center ">
+                            <p className="    ring-inset ring-indigo-300 transition duration-100 focus:ring">
+                              {item?.oquantity}
+                            </p>
+                          </div>
+                          {/* product quantity ends   */}
+
+                          {/* button section starts  */}
+
+                          <div className=" w-[30%] flex flex-col divide-y border-l">
+                            <button
+                              onClick={() => handleAddItem(item)}
+                              className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
+                            >
+                              +
+                            </button>
+
+                            <button
+                              onClick={() => handleReduceItem(item)}
+                              className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
+                            >
+                              -
+                            </button>
+                          </div>
+                          {/* button section ends  */}
+                        </div>
+
                         <button
-                          onClick={() => handleAddItem()}
-                          className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
+                          className="select-none text-sm font-semibold text-indigo-500 transition duration-100 hover:text-indigo-600 active:text-indigo-700"
+                          onClick={() => handleDeleteItem(item)}
                         >
-                          +
-                        </button>
-
-                        <button
-                          onClick={() => handleReduceItem()}
-                          className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
-                        >
-                          -
+                          Delete
                         </button>
                       </div>
-                      {/* button section ends  */}
+
+                      {/* product price starts  */}
+                      <div className="ml-4 pt-3 sm:pt-2 md:ml-8 lg:ml-16">
+                        <span className="block font-bold text-gray-800 md:text-lg">
+                          $15.00
+                        </span>
+                      </div>
+                      {/* product price ends */}
                     </div>
+                    {/* right section ends   */}
 
-                    <button className="select-none text-sm font-semibold text-indigo-500 transition duration-100 hover:text-indigo-600 active:text-indigo-700">
-                      Delete
-                    </button>
+                    {/*  */}
                   </div>
-
-                  {/* product price starts  */}
-                  <div className="ml-4 pt-3 sm:pt-2 md:ml-8 lg:ml-16">
-                    <span className="block font-bold text-gray-800 md:text-lg">
-                      $15.00
-                    </span>
-                  </div>
-                  {/* product price ends */}
                 </div>
-                {/* right section ends   */}
-
-                {/*  */}
-              </div>
-            </div>
-            {/* product - end  */}
+              ))}
           </div>
 
           {/* bottom section strts  */}

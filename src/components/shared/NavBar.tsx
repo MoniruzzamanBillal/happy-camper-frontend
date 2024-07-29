@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
-  const Links = [
-    { name: "Home", link: "/" },
-    { name: "About us", link: "/about-us" },
-    { name: "products", link: "/products" },
-    { name: "Manage products", link: "/all-product" },
-  ];
+const Links = [
+  { name: "Home", link: "/" },
+  { name: "About us", link: "/about-us" },
+  { name: "products", link: "/products" },
+  { name: "Manage products", link: "/all-product" },
+  { name: "Cart", link: "/cart" },
+];
 
+const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -62,10 +63,6 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
-
-          <button className="btn border-2 border-[#21286a] text-[#21286a] hover:bg-[#21286a] hover:text-white md:ml-8  px-6 py-3 rounded-full duration-500 md:static text-sm">
-            Logout
-          </button>
         </ul>
       </div>
     </div>
