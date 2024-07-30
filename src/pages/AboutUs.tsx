@@ -16,15 +16,15 @@ const AboutUs = () => {
           <div className="missionStatement w-[96%] sm:w-[92%] md:w-[90%] m-auto  ">
             <h1 className="font-semibold text-3xl mb-4 ">Our mission </h1>
             <p className=" font-medium text-lg text-gray-700 ">
-              At Campers Shop, our mission is to inspire and equip camping
-              enthusiasts with high-quality, reliable, and innovative gear that
-              enhances their outdoor adventures. We are committed to providing
-              exceptional customer service, fostering a community of outdoor
-              enthusiasts, and promoting sustainable practices to protect the
-              natural environments we love to explore. Our values of integrity,
-              passion for the outdoors, and dedication to customer satisfaction
-              drive everything we do, ensuring that every camper can create
-              unforgettable memories in the great outdoors.
+              At Camper Shop, our mission is to inspire and equip outdoor
+              enthusiasts with the highest quality camping gear and accessories.
+              We believe in the power of nature to rejuvenate the spirit, and we
+              are committed to providing our customers with the tools they need
+              to explore the great outdoors safely and comfortably. Our core
+              values of adventure, sustainability, and customer satisfaction
+              guide everything we do, from the products we offer to the customer
+              service we provide. We aim to foster a community of campers who
+              share our passion for nature and adventure.
             </p>
           </div>
 
@@ -35,7 +35,7 @@ const AboutUs = () => {
 
           {/* contact section  */}
           <div className="contactStatement w-[96%] sm:w-[92%] md:w-[90%] m-auto ">
-            <h1 className="font-semibold text-3xl mb-4 ">Contact us </h1>
+            <h1 className="font-semibold text-3xl mb-8 ">Contact us </h1>
             <p className=" font-medium  text-gray-700 mb-2 ">
               <span className=" font-bold "> phone :</span> 019064545
             </p>
@@ -48,7 +48,7 @@ const AboutUs = () => {
             </p>
 
             {/* social media link   */}
-            <div className="  flex flex-col gap-y-3 ">
+            <div className=" mt-8 flex flex-col gap-y-3 ">
               <div className="mr-12 hidden lg:block">
                 <span className=" font-medium  text-gray-700  ">
                   Get connected with us on social networks:
@@ -58,7 +58,7 @@ const AboutUs = () => {
               <div className="flex ">
                 {/* facebook icon  */}
                 <Link
-                  to={""}
+                  to={"https://www.facebook.com/"}
                   className="mr-6 text-3xl text-neutral-600 hover:text-blue-700"
                 >
                   <FaFacebook />
@@ -66,14 +66,14 @@ const AboutUs = () => {
 
                 {/* linkedin icon  */}
                 <Link
-                  to={""}
+                  to={"https://bd.linkedin.com/"}
                   className="mr-6 text-3xl text-neutral-600 hover:text-blue-800"
                 >
                   <FaLinkedin />
                 </Link>
                 {/* github icon  */}
                 <Link
-                  to={""}
+                  to={"https://github.com/MoniruzzamanBillal"}
                   className="mr-6 text-3xl text-neutral-600 hover:text-neutral-800"
                 >
                   <FaGithub />
@@ -85,7 +85,7 @@ const AboutUs = () => {
           </div>
 
           {/* map section starts  */}
-          <div className="mapSection  w-[96%] sm:w-[92%] md:w-[90%] m-auto">
+          <div className=" mt-6 mapSection  w-[96%] sm:w-[92%] md:w-[90%] m-auto">
             <MapContainer />
           </div>
           {/* map section ends */}
