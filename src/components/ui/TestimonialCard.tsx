@@ -5,7 +5,6 @@ type TTestimonialProps = {
 };
 
 const TestimonialCard = ({ testimonial }: TTestimonialProps) => {
-  console.log(testimonial);
   return (
     <div className="TestimonialCardContainer">
       <div className="TestimonialCardWrapper">

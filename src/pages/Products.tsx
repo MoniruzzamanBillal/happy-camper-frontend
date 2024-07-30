@@ -1,5 +1,6 @@
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { Input } from "@/components/ui/input";
+import Loading from "@/components/ui/loading/Loading";
 import NoProduct from "@/components/ui/NoProduct";
 import ProductCard from "@/components/ui/ProductCard";
 import ProductsFilter from "@/components/ui/ProductsFilter";
@@ -20,6 +21,7 @@ import { useParams } from "react-router-dom";
 const Products = () => {
   const { ParamCategory } = useParams();
 
+  const [testLoading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [pprice, setPprice] = useState<number | null>(null);
   const [pcategory, setpPcategory] = useState("");
@@ -91,7 +93,7 @@ const Products = () => {
   // console.log(allProduct?.data?.length);
 
   if (isLoading) {
-    return <p>loading ...</p>;
+    return <Loading />;
   }
 
   return (
@@ -182,7 +184,10 @@ const Products = () => {
                 <p className="text-gray-600 "> sort by : </p>
 
                 {/* input section  */}
-                <Select onValueChange={(value) => setSortBy(value)}>
+                <Select
+                  value={sort}
+                  onValueChange={(value) => setSortBy(value)}
+                >
                   <SelectTrigger className="w-[14rem]  outline-none border-gray-400 ring-0 focus:ring-0  ">
                     <SelectValue placeholder="sort by price" />
                   </SelectTrigger>

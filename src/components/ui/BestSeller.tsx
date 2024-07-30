@@ -26,11 +26,6 @@ const bestSellerInfo: TBestSeller[] = [
   },
 
   {
-    prodImg: "https://i.ibb.co/njCXgZ9/kitchen.jpg",
-    prodName: "Kitchen",
-  },
-
-  {
     prodImg: "https://i.ibb.co/TY3Zzbc/charcoal.jpg",
     prodName: "Char coal",
   },

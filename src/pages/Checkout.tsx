@@ -34,11 +34,22 @@ const Checkout = () => {
 
   // console.log(cartProduct);
 
+  // ! Validation function
+  const validateInputs = () => {
+    if (!name || !email || !phone || !address || !orderMethos) {
+      toast.error("Please fill in all fields!");
+      return false;
+    }
+    return true;
+  };
+
   // ! for placing order
   const handlePlaceOrder = async () => {
-    const toastId = toast.loading("Placing order !! ");
+    if (!validateInputs()) {
+      return;
+    }
 
-    console.log(orderMethos);
+    const toastId = toast.loading("Placing order !! ");
 
     try {
       const orderData = {
@@ -57,7 +68,7 @@ const Checkout = () => {
       //   orderData
       // );
 
-      console.log(result?.data);
+      // console.log(result?.data);
 
       if (result?.data?.success) {
         toast.success("Order completed successfully !!! ", { id: toastId });
@@ -65,7 +76,7 @@ const Checkout = () => {
 
         setTimeout(() => {
           navigate("/order-success");
-        }, 2000);
+        }, 1200);
       }
     } catch (error) {
       console.log(error);

@@ -1,6 +1,7 @@
 import { useGetAllProductQuery } from "@/redux/features/product/product.api";
 import { TProduct } from "@/types";
 import ProductCard from "./ProductCard";
+import Loading from "./loading/Loading";
 
 const FeaturedProducts = () => {
   const { data: featuredProducts, isLoading } = useGetAllProductQuery({
@@ -8,7 +9,7 @@ const FeaturedProducts = () => {
   });
 
   if (isLoading) {
-    return <p>loading .. </p>;
+    return <Loading />;
   }
 
   return (
