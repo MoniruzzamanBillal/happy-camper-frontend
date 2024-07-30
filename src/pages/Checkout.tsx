@@ -52,6 +52,10 @@ const Checkout = () => {
         "http://localhost:5000/api/v1/order/add-order",
         orderData
       );
+      // const result = await axios.post(
+      //   "https://camper-shop-server.vercel.app/api/v1/order/add-order",
+      //   orderData
+      // );
 
       console.log(result?.data);
 

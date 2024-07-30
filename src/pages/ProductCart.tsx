@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import NoCartItem from "@/components/ui/NoCartItem";
 import {
   useAddCartQuantityMutation,
@@ -45,7 +46,7 @@ const ProductCart = () => {
       console.log(result);
 
       if (result?.error) {
-        toast.error(result?.error?.data?.message, { id: toadtId });
+        toast.error((result?.error as any)?.data?.message, { id: toadtId });
       }
 
       // ! if no error

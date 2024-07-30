@@ -38,6 +38,9 @@ const ProductTable = () => {
     const response = await axios.patch(
       `http://localhost:5000/api/v1/product/delete/${id}`
     );
+    // const response = await axios.patch(
+    //   `https://camper-shop-server.vercel.app/api/v1/product/delete/${id}`
+    // );
 
     console.log(response?.data);
 
