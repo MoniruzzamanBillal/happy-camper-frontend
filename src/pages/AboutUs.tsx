@@ -87,6 +87,10 @@ const AboutUs = () => {
           {/* map section starts  */}
           <div className=" mt-6 mapSection  w-[96%] sm:w-[92%] md:w-[90%] m-auto">
             <MapContainer />
+
+            {/* <div className="imgContainer  ">
+              <img src="https://i.ibb.co/ykpj0bP/google-map-shop.png" alt="" />
+            </div> */}
           </div>
           {/* map section ends */}
 
