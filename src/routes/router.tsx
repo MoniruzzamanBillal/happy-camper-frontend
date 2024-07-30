@@ -7,17 +7,18 @@ import ProductDetail from "@/pages/ProductDetail";
 import ProductCart from "@/pages/ProductCart";
 import Checkout from "@/pages/Checkout";
 import AboutUs from "@/pages/AboutUs";
-// import AddProduct from "@/pages/AddProduct";
 import Test from "@/pages/Test";
 import ProductTable from "@/pages/ProductTable";
 import AddProduct from "@/pages/AddProduct";
 import UpdateProduct from "@/pages/UpdateProduct";
 import OrderSuccess from "@/pages/OrderSuccess";
+import ErrorPage from "@/pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
