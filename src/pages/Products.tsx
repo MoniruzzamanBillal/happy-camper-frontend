@@ -1,4 +1,3 @@
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { Input } from "@/components/ui/input";
 import Loading from "@/components/ui/loading/Loading";
 import NoProduct from "@/components/ui/NoProduct";

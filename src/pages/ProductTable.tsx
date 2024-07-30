@@ -23,6 +23,7 @@ import { TProduct } from "@/types";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
+import Loading from "@/components/ui/loading/Loading";
 
 const ProductTable = () => {
   const {
@@ -51,7 +52,7 @@ const ProductTable = () => {
   };
 
   if (isLoading) {
-    return <p>loading ...</p>;
+    return <Loading />;
   }
 
   return (

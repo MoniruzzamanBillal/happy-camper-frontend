@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import Loading from "@/components/ui/loading/Loading";
 import NoCartItem from "@/components/ui/NoCartItem";
 import {
   useAddCartQuantityMutation,
@@ -150,7 +151,7 @@ const ProductCart = () => {
   }, [cartData, isLoading]);
 
   if (isLoading) {
-    return <p>loading ... </p>;
+    return <Loading />;
   }
 
   return (
