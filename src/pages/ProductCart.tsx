@@ -30,7 +30,22 @@ const ProductCart = () => {
   const [decreaseCartQuantity] = useDecreaseCartQuantityMutation();
   const [deleteCartQuantity] = useDeleteCartQuantityMutation();
 
-  // console.log(cartData?.data);
+  // ! for hanling reload if cart is not empty
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (cartData?.data && cartData?.data.length > 0) {
+        event.preventDefault();
+        event.returnValue =
+          "You have items in your cart. Are you sure you want to leave?";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [cartData]);
 
   //   ! for adding item
   const handleAddItem = async (item: TCartItrm) => {
