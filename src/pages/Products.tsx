@@ -21,7 +21,6 @@ import { useParams } from "react-router-dom";
 const Products = () => {
   const { ParamCategory } = useParams();
 
-  const [testLoading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [pprice, setPprice] = useState<number | null>(null);
   const [pcategory, setpPcategory] = useState("");

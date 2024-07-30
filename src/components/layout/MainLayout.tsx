@@ -17,7 +17,7 @@ export const MainLayout = () => {
       </div>
       {/* child component  */}
 
-      <div className="footerContainer  ">
+      <div className="footerContainer   ">
         <Footer />
       </div>
     </div>

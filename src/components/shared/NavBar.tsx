@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { RiMenu3Fill, RiCloseFill } from "react-icons/ri";
 
 const Links = [
   { name: "Home", link: "/" },
@@ -13,39 +14,41 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="shadow-md w-full fixed top-0 left-0 z-10">
-      <div
-        className="md:flex items-center justify-between py-1 md:px-10 px-7"
-        style={{
-          background: "rgba(0,0,0,0)",
-          backdropFilter: "blur(8px)",
-        }}
-      >
+    <div
+      className="  shadow-md w-full fixed top-0 left-0 z-10 "
+      style={{
+        backdropFilter: "blur(8px)",
+      }}
+    >
+      <div className="  flex items-center justify-between py-1 w-[90%] m-auto   ">
         {/* logo section */}
-        <Link to={"/"}>
-          <div className=" text-2xl cursor-pointer flex items-center  gap-x-2">
-            <img
-              src="https://i.ibb.co/TL2yHhb/Daco-4947937.png"
-              className="w-[4rem]"
-              alt="logo"
-            />
+        <div className="imgContainer  ">
+          <Link to={"/"}>
+            <div className=" text-2xl cursor-pointer flex items-center  gap-x-2">
+              <img
+                src="https://i.ibb.co/TL2yHhb/Daco-4947937.png"
+                className="  w-[3rem] sm:w-[4rem]"
+                alt="logo"
+              />
 
-            <p className=" text-3xl font-bold font-headingFont ">
-              Happy <span className="   text-indigo-500">campers</span>{" "}
-            </p>
-          </div>
-        </Link>
+              <p className=" text-2xl sm:text-3xl font-bold font-headingFont ">
+                Happy <span className="   text-indigo-500">campers</span>{" "}
+              </p>
+            </div>
+          </Link>
+        </div>
+
         {/* Menu icon */}
         <div
           onClick={() => setOpen(!open)}
-          className="absolute right-8 top-4 cursor-pointer md:hidden w-7 h-7"
+          className="   flex justify-center items-center   cursor-pointer md:hidden  font-semibold  text-2xl "
         >
-          {open ? "XMarkIcon" : "Bars3BottomRightIcon"}
+          {open ? <RiCloseFill className="  " /> : <RiMenu3Fill />}
         </div>
         {/* linke items */}
         <ul
-          className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static md:bg-transparent bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${
-            open ? "top-12 block" : "top-[-490px]"
+          className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static md:bg-transparent bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-10 transition-all duration-300 ease-in text-xs xsm:text-sm sm:text-base md:text-xs xmd:text-sm lg:text-base  ${
+            open ? "top-[3.2rem] block" : "top-[-490px]"
           }`}
           style={{
             backdropFilter: "blur(8px)",
@@ -60,6 +63,7 @@ const Navbar = () => {
                 <Link
                   to={link.link}
                   className="text-gray-700 hover:text-[#017dfc] duration-500"
+                  onClick={() => setOpen(false)}
                 >
                   {link.name}
                 </Link>
