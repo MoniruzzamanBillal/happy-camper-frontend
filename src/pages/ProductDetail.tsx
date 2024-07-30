@@ -1,5 +1,6 @@
 /* eslint-disable no-unsafe-optional-chaining */
 
+import Loading from "@/components/ui/loading/Loading";
 import { useAddToCartMutation } from "@/redux/features/cart/cart.api";
 import { useGetSingleProductQuery } from "@/redux/features/product/product.api";
 import GlassZoomImage from "@/utills/GlassZoomImage";
@@ -51,7 +52,7 @@ const ProductDetail = () => {
   };
 
   if (productDataLoading) {
-    return <p>Loading ... </p>;
+    return <Loading />;
   }
 
   return (
