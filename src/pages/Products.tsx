@@ -99,7 +99,7 @@ const Products = () => {
     <div className="ProductsContainer bg-gray-100 py-4 ">
       <div className="productsWrapper w-[96%] sm:w-[92%] md:w-[90%] m-auto flex flex-col gap-y-8 ">
         {/* search section   */}
-        <div className="searchSection bg-gray-50 border border-gray-300  w-[40%] m-auto py-1 px-1.5 rounded-full flex justify-center items-center  ">
+        <div className="searchSection bg-gray-50 border border-gray-300  w-[40%] m-auto py-1 px-5 rounded-full flex justify-center items-center  ">
           <Input
             type="text"
             placeholder="Looking for...."
@@ -107,15 +107,8 @@ const Products = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <HoverBorderGradient
-            containerClassName="rounded-full"
-            as="button"
-            className="  bg-white text-black font-semibold dark:text-white px-5 py-1 "
-          >
-            <p>Search</p>
-          </HoverBorderGradient>
         </div>
-        {/* search section   */}
+        {/* search section ends  */}
 
         {/* content body starts  */}
         <div className="contentBody  flex justify-between gap-x-3 ">
