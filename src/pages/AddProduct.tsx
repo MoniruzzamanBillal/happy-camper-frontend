@@ -42,7 +42,7 @@ const AddProduct = () => {
         setTimeout(() => {
           navigate("/all-product");
           window.location.reload();
-        }, 2000);
+        }, 500);
       }
     } catch (error) {
       console.log(error);

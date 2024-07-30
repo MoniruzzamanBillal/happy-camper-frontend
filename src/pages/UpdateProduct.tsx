@@ -61,7 +61,7 @@ const UpdateProduct = () => {
 
       setTimeout(() => {
         navigate("/all-product");
-      }, 200);
+      }, 400);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong !! ", { id: toastId });
