@@ -14,8 +14,9 @@ import {
 
 import { toast } from "sonner";
 import { useEffect } from "react";
-import GetImgLink from "@/utills/GetImgLink";
+
 import { categoryOptions } from "@/utills/Constants";
+import Loading from "@/components/ui/loading/Loading";
 
 const UpdateProduct = () => {
   const [updateSingleProduct] = useUpdateSingleProductMutation();
@@ -28,8 +29,6 @@ const UpdateProduct = () => {
 
   const { data: productData, isLoading } = useGetSingleProductQuery(id);
 
-  // console.log(productData);
-
   let defaultValues = {
     name: productData?.data?.pname,
     category: productData?.data?.pcategory,
@@ -40,28 +39,27 @@ const UpdateProduct = () => {
 
   // ! for updating product
   const handleUpdateProduct = async (data: FieldValues) => {
-    const { image, name, category, price, description, quantity } = data;
+    const { name, category, price, description, quantity } = data;
 
     const toastId = toast.loading("updating product ...");
     try {
-      const imgUrl = await GetImgLink(image);
-
       const productData = {
         pname: name,
         pcategory: category,
         pquantity: quantity,
-        pimage: imgUrl,
         pprice: price,
         pdescriptioin: description,
       };
 
-      await updateSingleProduct({ id, productData });
+      const result = await updateSingleProduct({ id, productData });
 
-      toast.success("Product updated successfully !! ", { id: toastId });
+      if (result?.data?.success) {
+        toast.success("Product updated successfully !! ", { id: toastId });
 
-      setTimeout(() => {
-        navigate("/all-product");
-      }, 400);
+        setTimeout(() => {
+          navigate("/all-product");
+        }, 400);
+      }
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong !! ", { id: toastId });
@@ -83,7 +81,7 @@ const UpdateProduct = () => {
   }, [productData]);
 
   if (isLoading) {
-    return <p>Loading ...</p>;
+    return <Loading />;
   }
 
   return (
@@ -108,7 +106,6 @@ const UpdateProduct = () => {
               label="Category :"
               options={categoryOptions}
             />
-            <CamperInput type="file" label="Image :" name="image" />
             <CamperInput type="number" label="Quantity :" name="quantity" />
             <CamperInput type="number" label="Price :" name="price" />
             <CamperTextArea label="Product description :" name="description" />
