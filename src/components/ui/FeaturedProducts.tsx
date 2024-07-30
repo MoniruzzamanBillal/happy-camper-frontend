@@ -23,7 +23,7 @@ const FeaturedProducts = () => {
           {/* products content starts  */}
           <div className="productsContent  py-3 px-4 ">
             {/* all products  */}
-            <div className="allProducts grid grid-cols-1 sm:grid-cols-2 xmd:grid-cols-3 gap-x-8 gap-y-10 ">
+            <div className="allProducts grid grid-cols-1 xsm:grid-cols-2 xmd:grid-cols-3 gap-x-8 gap-y-10 ">
               {featuredProducts?.data &&
                 featuredProducts?.data?.map(
                   (product: TProduct, ind: number) => (

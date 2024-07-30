@@ -1,39 +1,35 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <div className="bg-white pt-4 sm:pt-10 lg:pt-12">
       <footer className="mx-auto max-w-screen-2xl px-4 md:px-8">
         <div className="flex flex-col items-center border-t pt-6">
           <nav className="mb-4 flex flex-wrap justify-center gap-x-4 gap-y-2 md:justify-start md:gap-6">
-            <a
-              href="#"
+            <Link
+              to={"/about-us"}
               className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
             >
-              About
-            </a>
-            <a
-              href="#"
+              About Us
+            </Link>
+            <Link
+              to={"/products"}
               className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
             >
-              Investor Relations
-            </a>
-            <a
-              href="#"
+              Products
+            </Link>
+            <Link
+              to={"/cart"}
               className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
             >
-              Jobs
-            </a>
-            <a
-              href="#"
+              Cart
+            </Link>
+            <Link
+              to={"/all-product"}
               className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
             >
-              Press
-            </a>
-            <a
-              href="#"
-              className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
-            >
-              Blog
-            </a>
+              Manage Product
+            </Link>
           </nav>
 
           <div className="flex gap-4">

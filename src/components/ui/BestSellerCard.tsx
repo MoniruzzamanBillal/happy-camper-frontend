@@ -1,22 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
-import { TBestSeller } from "./BestSeller";
+
 import { Button } from "./button";
 
-type TBestSellerProps = {
-  item: TBestSeller;
-};
-
-const BestSellerCard = ({ item }: TBestSellerProps) => {
+const BestSellerCard = ({ item }: any) => {
   return (
     <div className="bestSellerCard bg-white  py-4  flex flex-col items-center gap-y-4 border rounded-2xl hover:border-indigo-500 shadow-sm hover:shadow-md">
       {/* item image  */}
       <div className="cardImg size-[12rem]  ">
-        <img className=" w-full h-full " src={item?.prodImg} alt="" />
+        <img className=" w-full h-full " src={item?.pimage} alt="" />
       </div>
 
       {/* item name  */}
       <div className="cardName   ">
-        <p className=" font-medium text-center text-lg  ">{item?.prodName} </p>
+        <p className=" font-medium text-center text-lg  ">{item?.pname} </p>
       </div>
 
       {/* button section  */}

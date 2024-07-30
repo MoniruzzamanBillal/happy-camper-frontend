@@ -9,37 +9,20 @@ import BestSellerCard from "./BestSellerCard";
 
 // import required modules
 import { Autoplay } from "swiper/modules";
-
-export type TBestSeller = {
-  prodImg: string;
-  prodName: string;
-};
-
-const bestSellerInfo: TBestSeller[] = [
-  {
-    prodImg: "https://i.ibb.co/DtqW079/sleeping-Bag.jpg",
-    prodName: "Sleeping Bag",
-  },
-  {
-    prodImg: "https://i.ibb.co/brvH1CW/tent.png",
-    prodName: "Tent",
-  },
-
-  {
-    prodImg: "https://i.ibb.co/TY3Zzbc/charcoal.jpg",
-    prodName: "Char coal",
-  },
-  {
-    prodImg: "https://i.ibb.co/3Fr7bsx/lantern.jpg",
-    prodName: "Lantern",
-  },
-  {
-    prodImg: "https://i.ibb.co/3hHSXT4/tool.jpg",
-    prodName: "Multifunctional Tool",
-  },
-];
+import { useGetAllProductQuery } from "@/redux/features/product/product.api";
+import Loading from "./loading/Loading";
 
 const BestSeller = () => {
+  const { data: featuredProducts, isLoading } = useGetAllProductQuery({
+    limit: 6,
+  });
+
+  // console.log(featuredProducts?.data);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="BestSellerContainer bg-gray-100 py-8">
       <div className="BestSellerWrapper w-[96%] sm:w-[92%] md:w-[90%] m-auto ">
@@ -74,8 +57,9 @@ const BestSeller = () => {
             modules={[Autoplay]}
             className="mySwiper"
           >
-            {bestSellerInfo &&
-              bestSellerInfo?.map((item, ind) => (
+            {featuredProducts?.data &&
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              featuredProducts?.data?.map((item: any, ind: number) => (
                 <SwiperSlide>
                   <BestSellerCard key={ind} item={item} />
                 </SwiperSlide>

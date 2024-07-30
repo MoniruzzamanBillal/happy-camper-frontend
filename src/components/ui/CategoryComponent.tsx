@@ -8,23 +8,23 @@ export type TProductcategory = {
 const productsCategory: TProductcategory[] = [
   {
     productName: "Sleeping Bag",
-    productIMG: "https://i.ibb.co/FzF0q8y/phone.jpg",
+    productIMG: "https://i.ibb.co/DtqW079/sleeping-Bag.jpg",
   },
   {
     productName: "Tent",
-    productIMG: "https://i.ibb.co/RpK31MH/earphone.jpg",
+    productIMG: "https://i.ibb.co/brvH1CW/tent.png",
   },
   {
     productName: "Lantern",
-    productIMG: "https://i.ibb.co/CwbG0N8/adapter.jpg",
+    productIMG: "https://i.ibb.co/3Fr7bsx/lantern.jpg",
   },
   {
     productName: "Char coal",
-    productIMG: "https://i.ibb.co/Qm8xg1b/smartwtch.jpg",
+    productIMG: "https://i.ibb.co/TY3Zzbc/charcoal.jpg",
   },
   {
     productName: "Multifunctional Tool",
-    productIMG: "https://i.ibb.co/dK0x4ZY/power-bank.jpg",
+    productIMG: "https://i.ibb.co/3hHSXT4/tool.jpg",
   },
 ];
 
@@ -37,7 +37,7 @@ const CategoryComponent = () => {
         </h1>
 
         {/* category card  */}
-        <div className="categoryCard  grid grid-cols-2 xsm:grid-cols-3 xmd:grid-cols-4 gap-x-3 gap-y-12 ">
+        <div className="categoryCard  grid grid-cols-1 xsm:grid-cols-2 sm:grid-cols-3 xmd:grid-cols-4 gap-x-3 gap-y-12 ">
           {productsCategory &&
             productsCategory.map((product, ind) => (
               <CategoryCard key={ind} product={product} />
