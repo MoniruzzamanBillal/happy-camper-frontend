@@ -44,8 +44,6 @@ const ProductCart = () => {
 
       const result = await addCartQuantity(data);
 
-      console.log(result);
-
       if (result?.error) {
         toast.error((result?.error as any)?.data?.message, { id: toadtId });
       }

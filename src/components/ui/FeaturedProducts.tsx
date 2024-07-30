@@ -5,7 +5,7 @@ import Loading from "./loading/Loading";
 
 const FeaturedProducts = () => {
   const { data: featuredProducts, isLoading } = useGetAllProductQuery({
-    limit: 5,
+    limit: 3,
   });
 
   if (isLoading) {

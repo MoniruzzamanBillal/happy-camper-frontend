@@ -17,8 +17,6 @@ const BestSeller = () => {
     limit: 6,
   });
 
-  // console.log(featuredProducts?.data);
-
   if (isLoading) {
     return <Loading />;
   }

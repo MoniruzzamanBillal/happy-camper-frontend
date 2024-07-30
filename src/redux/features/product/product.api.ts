@@ -13,6 +13,16 @@ const productApi = baseApi.injectEndpoints({
       },
     }),
 
+    // ! get all products count
+    getAllProductCount: builder.query({
+      query: () => {
+        return {
+          url: "/product/all-count",
+          method: "GET",
+        };
+      },
+    }),
+
     // ! get single product
     getSingleProduct: builder.query({
       query: (id: string) => ({
@@ -54,4 +64,5 @@ export const {
   useAddProductMutation,
   useGetSingleProductQuery,
   useUpdateSingleProductMutation,
+  useGetAllProductCountQuery,
 } = productApi;

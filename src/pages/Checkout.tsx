@@ -76,7 +76,7 @@ const Checkout = () => {
 
         setTimeout(() => {
           navigate("/order-success");
-        }, 1200);
+        }, 600);
       }
     } catch (error) {
       console.log(error);

@@ -58,6 +58,7 @@ const UpdateProduct = () => {
 
         setTimeout(() => {
           navigate("/all-product");
+          window.location.reload();
         }, 400);
       }
     } catch (error) {

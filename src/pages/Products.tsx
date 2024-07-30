@@ -11,7 +11,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useGetAllProductQuery } from "@/redux/features/product/product.api";
+import {
+  useGetAllProductCountQuery,
+  useGetAllProductQuery,
+} from "@/redux/features/product/product.api";
 import { TProduct } from "@/types/product";
 
 import { useEffect, useState } from "react";
@@ -19,6 +22,10 @@ import { useParams } from "react-router-dom";
 
 const Products = () => {
   const { ParamCategory } = useParams();
+
+  const [totalItemCount, setTotalItemCount] = useState(0);
+  const [numofpages, setNumofpages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [pprice, setPprice] = useState<number | null>(null);
@@ -30,17 +37,47 @@ const Products = () => {
   );
 
   const { data: allProduct, isLoading } = useGetAllProductQuery(params);
+  const { data: allProductCount, isLoading: productLengthLoading } =
+    useGetAllProductCountQuery(undefined);
+
   const [isXl, setIsXl] = useState(false);
 
-  // console.log(allProduct);
+  const dataPerPage = 9;
+
+  const pages = [...new Array(numofpages).keys()];
+
+  //! function for handle next button in pagination
+  const handleNextCurrent = () => {
+    if (currentPage >= numofpages) {
+      return setCurrentPage(numofpages);
+    }
+    setCurrentPage(currentPage + 1);
+  };
+
+  //! function for handle previous button in pagination
+  const handlePrev = () => {
+    if (currentPage <= 1) {
+      return setCurrentPage(1);
+    }
+    setCurrentPage(currentPage - 1);
+  };
 
   // ! for reseting filter
   const handleAddReset = () => {
+    setCurrentPage(1);
+
     setParams(undefined);
     setSearchTerm("");
     setPprice(null);
     setSortBy("");
     setpPcategory("");
+
+    const newParam: Record<string, unknown> = {};
+
+    newParam.page = 1;
+    newParam.limit = dataPerPage;
+
+    setParams(newParam);
   };
 
   useEffect(() => {
@@ -53,6 +90,16 @@ const Products = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // ! effect to set all products count
+  useEffect(() => {
+    setTotalItemCount(allProductCount?.data);
+
+    if (totalItemCount) {
+      const numofpages2 = Math.ceil(totalItemCount / dataPerPage);
+      setNumofpages(numofpages2);
+    }
+  }, [allProductCount, productLengthLoading, totalItemCount]);
 
   // ! to set category if parameter exists
   useEffect(() => {
@@ -82,13 +129,30 @@ const Products = () => {
         newParam.sort = sort;
       }
 
+      newParam.page = 1;
+      newParam.limit = dataPerPage;
+
       setParams(newParam);
     };
 
     updateParam();
-  }, [searchTerm, pprice, pcategory, sort]);
+  }, [searchTerm, pprice, pcategory, sort, currentPage]);
 
-  // console.log(allProduct?.data?.length);
+  // ! effect to set pagination filter
+  useEffect(() => {
+    const updateParam = () => {
+      const newParam: Record<string, unknown> = {};
+
+      if (currentPage) {
+        newParam.page = currentPage;
+        newParam.limit = dataPerPage;
+      }
+
+      setParams(newParam);
+    };
+
+    updateParam();
+  }, [dataPerPage, currentPage]);
 
   if (isLoading) {
     return <Loading />;
@@ -217,6 +281,41 @@ const Products = () => {
           {/*  */}
         </div>
         {/* content body ends   */}
+        {/* pagination container  */}
+        {totalItemCount && totalItemCount <= 9 ? (
+          " "
+        ) : (
+          <div className="paginationContainer  sansFont relative z-[10] ">
+            <div className="pagination   mt-3 py-4 text-center text-xs xsm:text-sm sm:text-base  ">
+              <button
+                onClick={() => handlePrev()}
+                className=" py-1.5 xsm:py-2.5 px-2.5 xsm:px-3 sm:px-4 border-r border-gray-600 text-white bg-gray-500  hover:bg-gray-700   "
+              >
+                Prev
+              </button>
+              {pages.map((page) => (
+                <button
+                  onClick={() => setCurrentPage(page + 1)}
+                  className={` py-1.5 xsm:py-2.5 px-2.5 xsm:px-3 sm:px-4 text-white   ${
+                    currentPage - 1 === page
+                      ? "bg-[#e4c590] hover:bg-amber-300 "
+                      : "bg-gray-500  hover:bg-gray-700"
+                  } border-r border-gray-600 `}
+                >
+                  {page + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => handleNextCurrent()}
+                className="py-1.5 xsm:py-2.5 px-2.5 xsm:px-3 sm:px-4 text-white bg-gray-500  hover:bg-gray-700   "
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* pagination container  */}
 
         {/* products section  */}
         {/* products section  */}
